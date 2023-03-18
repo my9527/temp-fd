@@ -156,8 +156,8 @@ export function CurrencySearch({
           onChange={handleInput}
           onKeyDown={handleEnter}
         />
-        {showCommonBases && (
-          <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />
+        {(showCommonBases || true ) && (
+          <CommonBases chainId={chainId || 314} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />
         )}
         <RowBetween>
           <Text fontSize={14} fontWeight={500}>

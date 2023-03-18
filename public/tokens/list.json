@@ -1,0 +1,47 @@
+{
+    "name": "Roll Social Money",
+    "timestamp": "2022-09-26T23:19:38.897566015Z",
+    "version": {
+        "major": 5,
+        "minor": 2,
+        "patch": 1
+    },
+    "tags": {
+        "bases": {
+            "name": "Common Bases",
+            "description": "Commonly used trading bases"
+        },
+        "nft": {
+            "name": "NFT Tokens",
+            "description": "Tokens related to nft games platforms and projects"
+        },
+        "other": {
+            "name": "Other social money",
+            "description": "Broader universe of social money and personal tokens"
+        },
+        "roll": {
+            "name": "Social money on Roll",
+            "description": "Social money tokens issued via Roll"
+        }
+    },
+    "logoURI": "https://tryroll.com/wp-content/uploads/2018/11/cropped-icon-270x270.png",
+    "keywords": [
+        "roll",
+        "default",
+        "social money",
+        "personal tokens"
+    ],
+    "tokens": [
+        {
+            "name": "FileDoge",
+            "address": "0xCE3DF008810e8d41aB3275f6EcEa1989b07a2f57",
+            "symbol": "FileDoge",
+            "tags": [
+                "roll"
+            ],
+            "decimals": 18,
+            "chainId": 3141,
+            "logoURI": "/images/logos/0xCE3DF008810e8d41aB3275f6EcEa1989b07a2f57/logo.svg"
+        }
+    ]
+}

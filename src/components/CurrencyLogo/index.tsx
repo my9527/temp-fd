@@ -2,13 +2,30 @@ import { Currency, ETHER, Token } from '@uniswap/sdk'
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
-import EthereumLogo from '../../assets/images/ethereum-logo.png'
+// import EthereumLogo from '../../assets/images/ethereum-logo.png'
+import EthereumLogo from '../../assets/svg/file.svg'
 import useHttpLocations from '../../hooks/useHttpLocations'
 import { WrappedTokenInfo } from '../../state/lists/hooks'
 import Logo from '../Logo'
 
-const getTokenLogoURL = (address: string) =>
-  `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
+// const getTokenLogoURL = (address: string) =>
+//   `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
+
+const isFileCoin = (address: string) => {
+  if(!address) return false;
+  return [
+    "0x608f45818e53032bEBFe30c629f02966FaB69e96",//weth
+    "0xCE3DF008810e8d41aB3275f6EcEa1989b07a2f57", //tdg
+  ].some(v => v.toLowerCase()===address.toLowerCase())
+}
+
+const getTokenLogoURL = (address: string) => {
+  if(isFileCoin(address)) {
+    return  `/images/logos/${address}/logo.svg`;
+  }
+  return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
+}
+
 
 const StyledEthereumLogo = styled.img<{ size: string }>`
   width: ${({ size }) => size};
@@ -33,6 +50,7 @@ export default function CurrencyLogo({
 }) {
   const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined)
 
+  // console.log("WrappedTokenInfo", currency instanceof Token, currency instanceof WrappedTokenInfo, currency, uriLocations)
   const srcs: string[] = useMemo(() => {
     if (currency === ETHER) return []
 

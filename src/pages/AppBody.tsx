@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { useAddUserToken } from '../state/user/hooks'
+import { FILEDOGEH } from '../constants'
 
 export const BodyWrapper = styled.div`
   position: relative;
@@ -16,5 +18,13 @@ export const BodyWrapper = styled.div`
  * The styled container element that wraps the content of most pages and the tabs.
  */
 export default function AppBody({ children }: { children: React.ReactNode }) {
+
+  const addToken = useAddUserToken()
+
+  useEffect(() => {
+    addToken(FILEDOGEH);
+  }, []);
+
+  
   return <BodyWrapper>{children}</BodyWrapper>
 }

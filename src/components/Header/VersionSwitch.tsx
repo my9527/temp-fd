@@ -68,6 +68,7 @@ export default function VersionSwitch() {
       <VersionLabel enabled={version === Version.v1 && versionSwitchAvailable}>V1</VersionLabel>
     </VersionToggle>
   )
+  return null;
   return versionSwitchAvailable ? (
     toggle
   ) : (

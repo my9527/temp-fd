@@ -18,6 +18,7 @@ import { SwapState } from './reducer'
 import useToggledVersion from '../../hooks/useToggledVersion'
 import { useUserSlippageTolerance } from '../user/hooks'
 import { computeSlippageAdjustedAmounts } from '../../utils/prices'
+import { FILEDOGEH } from '../../constants'
 
 export function useSwapState(): AppState['swap'] {
   return useSelector<AppState, AppState['swap']>(state => state.swap)
@@ -89,9 +90,9 @@ export function tryParseAmount(value?: string, currency?: Currency): CurrencyAmo
 }
 
 const BAD_RECIPIENT_ADDRESSES: string[] = [
-  '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f', // v2 factory
-  '0xf164fC0Ec4E93095b804a4795bBe1e041497b92a', // v2 router 01
-  '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D' // v2 router 02
+  '0x022831C01390280BD03Ed2681cD96b49B9018c4E', // v2 factory
+  '0x589D94a2E5Da5c40bFa0b162Dc0fC68646FD1F53', // v2 router 01
+  '0x589D94a2E5Da5c40bFa0b162Dc0fC68646FD1F53' // v2 router 02
 ]
 
 /**
@@ -217,6 +218,7 @@ export function useDerivedSwapInfo(): {
   }
 }
 
+// ETH -> FIL
 function parseCurrencyFromURLParameter(urlParam: any): string {
   if (typeof urlParam === 'string') {
     const valid = isAddress(urlParam)
@@ -249,6 +251,8 @@ function validatedRecipient(recipient: any): string | null {
 export function queryParametersToSwapState(parsedQs: ParsedQs): SwapState {
   let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency)
   let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency)
+  console.log("queryParametersToSwapState", inputCurrency, outputCurrency)
+
   if (inputCurrency === outputCurrency) {
     if (typeof parsedQs.outputCurrency === 'string') {
       inputCurrency = ''
@@ -256,9 +260,12 @@ export function queryParametersToSwapState(parsedQs: ParsedQs): SwapState {
       outputCurrency = ''
     }
   }
+  if(outputCurrency === '') {
+    outputCurrency = FILEDOGEH.address
+  }
+  console.log("validatedRecipient", outputCurrency)
 
   const recipient = validatedRecipient(parsedQs.recipient)
-
   return {
     [Field.INPUT]: {
       currencyId: inputCurrency
