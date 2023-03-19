@@ -2,11 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { darken } from 'polished'
 import { useTranslation } from 'react-i18next'
-import { NavLink, Link as HistoryLink } from 'react-router-dom'
+import { NavLink, Link as HistoryLink, useLocation } from 'react-router-dom'
 
 import { ArrowLeft } from 'react-feather'
 import { RowBetween } from '../Row'
 import QuestionHelper from '../QuestionHelper'
+
+import Settings  from '../Settings'
 
 const Tabs = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -41,6 +43,11 @@ const StyledNavLink = styled(NavLink).attrs({
   :focus {
     color: ${({ theme }) => darken(0.1, theme.text1)};
   }
+
+
+  & + & {
+    margin-left: 3rem;
+  }
 `
 
 const ActiveText = styled.div`
@@ -52,17 +59,92 @@ const StyledArrowLeft = styled(ArrowLeft)`
   color: ${({ theme }) => theme.text1};
 `
 
-export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
+const StyledTitle = styled.span`
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 150%;
+`
+
+const MobileTabs = styled(Tabs)`
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    display: none;
+  `};
+`
+
+const PcTabs = styled(Tabs)<{position: 'nav' | 'form'}>`
+  margin-bottom: 20px;
+  display: ${({ position }) => position === 'nav' ? 'flex':'none'};
+  ${({ theme, position }) => theme.mediaWidth.upToExtraSmall`
+    display: ${position === 'nav' ? 'none':'flex'};
+  `};
+`
+
+// const StyledMenuButton = styled.button`
+//   position: relative;
+//   width: 100%;
+//   height: 100%;
+//   border: none;
+//   background-color: transparent;
+//   margin: 0;
+//   padding: 0;
+//   height: 35px;
+//   background-color: ${({ theme }) => theme.bg3};
+
+//   padding: 0.15rem 0.5rem;
+//   border-radius: 0.5rem;
+
+//   :hover,
+//   :focus {
+//     cursor: pointer;
+//     outline: none;
+//     background-color: ${({ theme }) => theme.bg4};
+//   }
+
+//   svg {
+//     margin-top: 2px;
+//   }
+// `
+// const StyledMenuIcon = styled(Settings)`
+//   height: 20px;
+//   width: 20px;
+
+//   > * {
+//     stroke: ${({ theme }) => theme.text1};
+//   }
+// `
+
+
+
+export function SwapPoolTabs({ active, position }: { active: 'swap' | 'pool', position: 'nav'| 'form' }) {
   const { t } = useTranslation()
+  const location = useLocation()
+
+  const curPath = location.pathname;
+
   return (
-    <Tabs style={{ marginBottom: '20px' }}>
-      <StyledNavLink id={`swap-nav-link`} to={'/swap'} isActive={() => active === 'swap'}>
+    <PcTabs position={position} style={{ marginBottom: '20px' }}>
+      <StyledNavLink id={`swap-nav-link`} to={'/swap'} isActive={() => curPath === '/swap'}>
         {t('swap')}
       </StyledNavLink>
-      <StyledNavLink id={`pool-nav-link`} to={'/pool'} isActive={() => active === 'pool'}>
+      <StyledNavLink id={`pool-nav-link`} to={'/pool'} isActive={() => curPath === '/pool'}>
         {t('pool')}
       </StyledNavLink>
-    </Tabs>
+      <StyledNavLink style={{ pointerEvents: 'none' }} aria-disabled id={`nft-nav-link`} to={'/nft'} isActive={() => curPath === '/nft'}>
+        NFT
+      </StyledNavLink>
+    </PcTabs>
+  )
+}
+
+export function SwapPoolTabsNew({ type }: { type: 'swap'|'pool'}) {
+  return (
+    <MobileTabs >
+        <StyledTitle>{ type === 'swap' ? 'Swap' : 'Pool' }</StyledTitle>
+        <Settings />
+    </MobileTabs>
   )
 }
 

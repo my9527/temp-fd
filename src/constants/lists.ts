@@ -1,5 +1,7 @@
 // the Uniswap Default token list lives here
-export const DEFAULT_TOKEN_LIST_URL = `${window.location.origin}/tokens/list.json`;
+export const DEFAULT_TOKEN_LIST_URL = 'tokens.uniswap.eth'
+
+export const DEFAULT_TOKEN_LIST_URL1 = `${window.location.origin}/tokens/list.json`;
 
 export const DEFAULT_LIST_OF_LISTS: string[] = [
   DEFAULT_TOKEN_LIST_URL,
@@ -12,7 +14,7 @@ export const DEFAULT_LIST_OF_LISTS: string[] = [
   'stablecoin.cmc.eth',
   'tokenlist.zerion.eth',
   'tokenlist.aave.eth',
-  // `${window.location.origin}/tokens/list.json`,
+  `${window.location.origin}/tokens/list.json`,
   'https://www.coingecko.com/tokens_list/uniswap/defi_100/v_0_0_0.json',
   'https://app.tryroll.com/tokens.json',
   'https://raw.githubusercontent.com/compound-finance/token-list/master/compound.tokenlist.json',

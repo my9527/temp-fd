@@ -47,7 +47,7 @@ const BodyWrapper = styled.div`
   z-index: 10;
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      padding: 16px;
+      padding: 5rem 16px 16px 16px;
   `};
 
   z-index: 1;

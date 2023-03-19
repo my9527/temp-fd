@@ -7,8 +7,8 @@ import styled from 'styled-components'
 
 import Logo from '../../assets/svg/logo.svg'
 import LogoDark from '../../assets/svg/logo_white.svg'
-import Wordmark from '../../assets/svg/wordmark.svg'
-import WordmarkDark from '../../assets/svg/wordmark_white.svg'
+// import Wordmark from '../../assets/svg/wordmark.svg'
+// import WordmarkDark from '../../assets/svg/wordmark_white.svg'
 import { useActiveWeb3React } from '../../hooks'
 import { useDarkModeManager } from '../../state/user/hooks'
 import { useETHBalances } from '../../state/wallet/hooks'
@@ -19,7 +19,9 @@ import Menu from '../Menu'
 
 import Row, { RowBetween } from '../Row'
 import Web3Status from '../Web3Status'
-import VersionSwitch from './VersionSwitch'
+// import VersionSwitch from './VersionSwitch'
+
+import { SwapPoolTabs } from '../NavigationTabs'
 
 const HeaderFrame = styled.div`
   display: flex;
@@ -42,6 +44,20 @@ const HeaderElement = styled.div`
   align-items: center;
 `
 
+const ReactiveSetting = styled(Settings)`
+  display: block;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+     display: none;
+  `};
+
+`
+
+// const HeaderElementTabs = styled(HeaderElement)`
+//   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+//   display: none;
+//   `};
+// `
+
 const HeaderElementWrap = styled.div`
   display: flex;
   align-items: center;
@@ -55,6 +71,7 @@ const Title = styled.a`
   display: flex;
   align-items: center;
   pointer-events: auto;
+  text-decoration: none;
 
   :hover {
     cursor: pointer;
@@ -64,6 +81,9 @@ const Title = styled.a`
 const TitleText = styled(Row)`
   width: fit-content;
   white-space: nowrap;
+  color: white;
+  font-weight: 500;
+  margin-left: 8px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     display: none;
   `};
@@ -95,6 +115,7 @@ const NetworkCard = styled(YellowCard)`
   margin-right: 10px;
   border-radius: 12px;
   padding: 8px 12px;
+  cursor: pointer;
 `
 
 const UniIcon = styled.div`
@@ -104,7 +125,7 @@ const UniIcon = styled.div`
   }
   ${({ theme }) => theme.mediaWidth.upToSmall`
     img { 
-      width: 4.5rem;
+      width: 36px;
     }
   `};
 `
@@ -120,6 +141,30 @@ const HeaderControls = styled.div`
   `};
 `
 
+const LeftControls = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: center;
+`
+
+// const LItem = styled.div`
+//   font-style: normal;
+//   font-weight: 400;
+//   font-size: 18px;
+//   line-height: 150%;
+//   /* identical to box height, or 27px */
+
+//   text-align: center;
+
+//   color: #000000;
+
+//   & + & {
+//     margin-left: 62px;
+//   }
+
+// `
+
 const BalanceText = styled(Text)`
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     display: none;
@@ -133,45 +178,52 @@ const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
   [ChainId.GÖRLI]: 'Görli',
   [ChainId.KOVAN]: 'Kovan',
   [ChainId.FILE]: 'FILE',
-  [ChainId.FILEH]: 'FILETest',
+  [ChainId.FILEH]: 'Hyperspace testnet',
 }
 
-export default function Header() {
+export default function Header(props: any) {
   const { account, chainId } = useActiveWeb3React()
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const [isDark] = useDarkModeManager()
 
+
   return (
     <HeaderFrame>
       <RowBetween style={{ alignItems: 'flex-start' }} padding="1rem 1rem 0 1rem">
-        <HeaderElement>
+        <HeaderElement style={{ width: "30%"}}>
           <Title href=".">
             <UniIcon>
               <img src={isDark ? LogoDark : Logo} alt="logo" />
             </UniIcon>
             <TitleText>
-              <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" />
+              {/* <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" /> */}
+              <span style={{ color: isDark ? 'white' : 'black' }}>FILEDOGE Swap</span>
             </TitleText>
           </Title>
         </HeaderElement>
-        <HeaderControls>
+        <HeaderElement style={{ flex: 1}}>
+          <LeftControls>
+            <SwapPoolTabs position="nav" active='swap'></SwapPoolTabs>
+          </LeftControls>
+        </HeaderElement>
+        <HeaderControls style={{ width: "30%", justifyContent: 'flex-end'}}>
           <HeaderElement>
             <TestnetWrapper>
               {!isMobile && chainId && NETWORK_LABELS[chainId] && <NetworkCard>{NETWORK_LABELS[chainId]}</NetworkCard>}
             </TestnetWrapper>
             <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
-              {account && userEthBalance ? (
+              {account && userEthBalance && false ? (
                 <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
-                  {userEthBalance?.toSignificant(4)} FIL
+                  {userEthBalance?.toSignificant(4)} {chainId === 314 ? 'FIL' : 'TFIL'}
                 </BalanceText>
               ) : null}
               <Web3Status />
             </AccountElement>
           </HeaderElement>
           <HeaderElementWrap>
-            <VersionSwitch />
-            <Settings />
+            {/* <VersionSwitch /> */}
+            { isMobile && <ReactiveSetting /> }
             <Menu />
           </HeaderElementWrap>
         </HeaderControls>

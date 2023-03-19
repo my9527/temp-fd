@@ -131,7 +131,7 @@ const AccountControl = styled.div`
   }
 `
 
-const AddressLink = styled(ExternalLink) <{ hasENS: boolean; isENS: boolean }>`
+const AddressLink = styled(ExternalLink)<{ hasENS: boolean; isENS: boolean }>`
   font-size: 0.825rem;
   color: ${({ theme }) => theme.text3};
   margin-left: 1rem;
@@ -198,31 +198,6 @@ const WalletAction = styled(ButtonSecondary)`
 
 const MainWalletAction = styled(WalletAction)`
   color: ${({ theme }) => theme.primary1};
-`
-
-const AddressTypeTitle = styled.div`
-
-font-family: 'Ubuntu';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 150%;
-letter-spacing: 0.2px;
-color: #000000;
-
-`
-
-const AddressText = styled.p`
-
-font-family: 'Ubuntu';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 150%;
-letter-spacing: 0.2px;
-color: #000000;
-opacity: 0.6;
-
 `
 
 function renderTransactions(transactions: string[]) {
@@ -331,7 +306,7 @@ export default function AccountDetails({
                     <WalletAction
                       style={{ fontSize: '.825rem', fontWeight: 400, marginRight: '8px' }}
                       onClick={() => {
-                        ; (connector as any).close()
+                        ;(connector as any).close()
                       }}
                     >
                       Disconnect
@@ -358,7 +333,11 @@ export default function AccountDetails({
                     </>
                   ) : (
                     <>
-                      <AddressTypeTitle>0x address </AddressTypeTitle>
+                      <div>
+                        {getStatusIcon()}
+                        <p> {account && shortenAddress(account)}</p>
+                        
+                      </div>
                     </>
                   )}
                 </AccountControl>
@@ -390,11 +369,9 @@ export default function AccountDetails({
                   <>
                     <AccountControl>
                       <div>
-                        {getStatusIcon()}
-                        <AddressText>{account && shortenAddress(account)}</AddressText>
                         {account && (
                           <Copy toCopy={account}>
-                            <span style={{ marginLeft: '4px' }}>Copy</span>
+                            <span style={{ marginLeft: '4px' }}>Copy Address</span>
                           </Copy>
                         )}
                         {chainId && account && (
@@ -404,7 +381,7 @@ export default function AccountDetails({
                             href={getEtherscanLink(chainId, account, 'address')}
                           >
                             <LinkIcon size={16} />
-                            <span style={{ marginLeft: '4px' }}>View</span>
+                            <span style={{ marginLeft: '4px' }}>View on Etherscan</span>
                           </AddressLink>
                         )}
                       </div>
@@ -423,9 +400,11 @@ export default function AccountDetails({
                     </>
                   ) : (
                     <>
-                      <AddressTypeTitle>
-                        F4 address
-                      </AddressTypeTitle>
+                      <div>
+                        {getStatusIcon()}
+                        <p> {account && shortenDelegateAddress(transDelegatedFromEthAddress(account))}</p>
+                        
+                      </div>
                     </>
                   )}
                 </AccountControl>
@@ -435,10 +414,9 @@ export default function AccountDetails({
                   <>
                     <AccountControl>
                       <div>
-                        <AddressText> {account && shortenDelegateAddress(transDelegatedFromEthAddress(account), chainId)}</AddressText>
                         {account && (
-                          <Copy toCopy={transDelegatedFromEthAddress(account, chainId)}>
-                            <span style={{ marginLeft: '4px' }}>Copy</span>
+                          <Copy toCopy={transDelegatedFromEthAddress(account)}>
+                            <span style={{ marginLeft: '4px' }}>Copy Address</span>
                           </Copy>
                         )}
                         {chainId && account && (
@@ -448,7 +426,7 @@ export default function AccountDetails({
                             href={chainId && getEtherscanLink(chainId, ENSName, 'address')}
                           >
                             <LinkIcon size={16} />
-                            <span style={{ marginLeft: '4px' }}>View</span>
+                            <span style={{ marginLeft: '4px' }}>View on Etherscan</span>
                           </AddressLink>
                         )}
                       </div>
@@ -458,11 +436,9 @@ export default function AccountDetails({
                   <>
                     <AccountControl>
                       <div>
-                        {getStatusIcon()}
-                        <AddressText> {account && shortenDelegateAddress(transDelegatedFromEthAddress(account, chainId))}</AddressText>
                         {account && (
-                          <Copy toCopy={transDelegatedFromEthAddress(account, chainId)}>
-                            <span style={{ marginLeft: '4px' }}>Copy</span>
+                          <Copy toCopy={account}>
+                            <span style={{ marginLeft: '4px' }}>Copy Address</span>
                           </Copy>
                         )}
                         {chainId && account && (
@@ -472,7 +448,7 @@ export default function AccountDetails({
                             href={getEtherscanLink(chainId, account, 'address')}
                           >
                             <LinkIcon size={16} />
-                            <span style={{ marginLeft: '4px' }}>View</span>
+                            <span style={{ marginLeft: '4px' }}>View on Etherscan</span>
                           </AddressLink>
                         )}
                       </div>

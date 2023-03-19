@@ -1,3 +1,5 @@
+import { delegatedFromEthAddress, CoinType } from '@glif/filecoin-address'
+
 import { Contract } from '@ethersproject/contracts'
 import { getAddress } from '@ethersproject/address'
 import { AddressZero } from '@ethersproject/constants'
@@ -7,6 +9,8 @@ import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUnisw
 import { ROUTER_ADDRESS } from '../constants'
 import { ChainId, JSBI, Percent, Token, CurrencyAmount, Currency, ETHER } from '@uniswap/sdk'
 import { TokenAddressMap } from '../state/lists/hooks'
+
+
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
@@ -54,6 +58,22 @@ export function shortenAddress(address: string, chars = 4): string {
     throw Error(`Invalid 'address' parameter '${address}'.`)
   }
   return `${parsed.substring(0, chars + 2)}...${parsed.substring(42 - chars)}`
+}
+
+export function shortenDelegateAddress(address: string, chars = 4): string {
+  
+  return `${address.substring(0, chars + 2)}...${address.substring(42 - chars)}`
+}
+
+export function transDelegatedFromEthAddress(address: string, chainId?: ChainId): string {
+  const parsed = isAddress(address)
+
+  console.log('address', address, parsed)
+  if (!parsed) {
+    throw Error(`Invalid 'address' parameter '${address}'.`)
+  }
+  // return parsed;
+  return delegatedFromEthAddress(address, chainId === ChainId.FILE ? CoinType.MAIN : CoinType.TEST)
 }
 
 // add 10%

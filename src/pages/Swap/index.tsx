@@ -10,7 +10,7 @@ import Card, { GreyCard } from '../../components/Card'
 import { AutoColumn } from '../../components/Column'
 import ConfirmSwapModal from '../../components/swap/ConfirmSwapModal'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
-import { SwapPoolTabs } from '../../components/NavigationTabs'
+import { SwapPoolTabs, SwapPoolTabsNew } from '../../components/NavigationTabs'
 import { AutoRow, RowBetween } from '../../components/Row'
 import AdvancedSwapDetailsDropdown from '../../components/swap/AdvancedSwapDetailsDropdown'
 import BetterTradeLink from '../../components/swap/BetterTradeLink'
@@ -45,6 +45,8 @@ import AppBody from '../AppBody'
 import { ClickableText } from '../Pool/styleds'
 import Loader from '../../components/Loader'
 import { FILEDOGEH } from '../../constants'
+// import { isMobile } from 'react-device-detect'
+import FormLogo from '../../components/FormLogo/formLogo'
 
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
@@ -279,7 +281,10 @@ export default function Swap() {
         onConfirm={handleConfirmTokenWarning}
       />
       <AppBody>
-        <SwapPoolTabs active={'swap'} />
+        {/* <SwapPoolTabs active={'swap'} /> */}
+        <FormLogo />
+        <SwapPoolTabs position='form' active={'swap'} />
+        <SwapPoolTabsNew type={'swap'} />
         <Wrapper id="swap-page">
           <ConfirmSwapModal
             isOpen={showConfirm}
