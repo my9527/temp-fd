@@ -9,6 +9,7 @@ import { RowBetween } from '../Row'
 import QuestionHelper from '../QuestionHelper'
 
 import Settings  from '../Settings'
+import { isMobile } from 'react-device-detect'
 
 const Tabs = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -31,7 +32,7 @@ const StyledNavLink = styled(NavLink).attrs({
   cursor: pointer;
   text-decoration: none;
   color: ${({ theme }) => theme.text3};
-  font-size: 20px;
+  font-size: 18px;
 
   &.${activeClassName} {
     border-radius: 12px;
@@ -143,7 +144,7 @@ export function SwapPoolTabsNew({ type }: { type: 'swap'|'pool'}) {
   return (
     <MobileTabs >
         <StyledTitle>{ type === 'swap' ? 'Swap' : 'Pool' }</StyledTitle>
-        <Settings />
+        {!isMobile && <Settings />}
     </MobileTabs>
   )
 }

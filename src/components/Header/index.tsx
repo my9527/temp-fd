@@ -1,4 +1,4 @@
-import { ChainId } from '@uniswap/sdk'
+import { ChainId } from 'my-uniswap-sdk'
 import React from 'react'
 import { isMobile } from 'react-device-detect'
 import { Text } from 'rebass'
@@ -13,9 +13,10 @@ import { useActiveWeb3React } from '../../hooks'
 import { useDarkModeManager } from '../../state/user/hooks'
 import { useETHBalances } from '../../state/wallet/hooks'
 
-import { YellowCard } from '../Card'
+// import { YellowCard } from '../Card'
 import Settings from '../Settings'
 import Menu from '../Menu'
+import NetworkMenu from '../NetworkMenu'
 
 import Row, { RowBetween } from '../Row'
 import Web3Status from '../Web3Status'
@@ -44,13 +45,13 @@ const HeaderElement = styled.div`
   align-items: center;
 `
 
-const ReactiveSetting = styled(Settings)`
-  display: block;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-     display: none;
-  `};
+// const ReactiveSetting = styled(Settings)`
+//   display: block;
+//   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+//      display: none;
+//   `};
 
-`
+// `
 
 // const HeaderElementTabs = styled(HeaderElement)`
 //   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -110,18 +111,30 @@ const TestnetWrapper = styled.div`
   pointer-events: auto;
 `
 
-const NetworkCard = styled(YellowCard)`
-  width: fit-content;
-  margin-right: 10px;
-  border-radius: 12px;
-  padding: 8px 12px;
-  cursor: pointer;
-`
+// const NetworkCard = styled(YellowCard)`
+//   width: fit-content;
+//   margin-right: 10px;
+//   border-radius: 12px;
+//   padding: 8px 12px;
+//   cursor: pointer;
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 14px;
+//   line-height: 150%;
+//   letter-spacing: 0.2px;
+
+//   color: #000000;
+
+
+// `
 
 const UniIcon = styled.div`
   transition: transform 0.3s ease;
   :hover {
     transform: rotate(-5deg);
+  }
+  img{ 
+    width: 43.2px;
   }
   ${({ theme }) => theme.mediaWidth.upToSmall`
     img { 
@@ -177,8 +190,8 @@ const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
   [ChainId.ROPSTEN]: 'Ropsten',
   [ChainId.GÖRLI]: 'Görli',
   [ChainId.KOVAN]: 'Kovan',
-  [ChainId.FILE]: 'FILE',
-  [ChainId.FILEH]: 'Hyperspace testnet',
+  [ChainId.FILE]: 'File Mainnet',
+  [ChainId.FILEH]: 'Hyperspace',
 }
 
 export default function Header(props: any) {
@@ -192,13 +205,13 @@ export default function Header(props: any) {
     <HeaderFrame>
       <RowBetween style={{ alignItems: 'flex-start' }} padding="1rem 1rem 0 1rem">
         <HeaderElement style={{ width: "30%"}}>
-          <Title href=".">
+          <Title href="https://www.filedoge.io">
             <UniIcon>
               <img src={isDark ? LogoDark : Logo} alt="logo" />
             </UniIcon>
             <TitleText>
               {/* <img style={{ marginLeft: '4px', marginTop: '4px' }} src={isDark ? WordmarkDark : Wordmark} alt="logo" /> */}
-              <span style={{ color: isDark ? 'white' : 'black' }}>FILEDOGE Swap</span>
+              <span style={{ color: isDark ? 'white' : 'black' }}>FILEDOGE</span>
             </TitleText>
           </Title>
         </HeaderElement>
@@ -210,7 +223,7 @@ export default function Header(props: any) {
         <HeaderControls style={{ width: "30%", justifyContent: 'flex-end'}}>
           <HeaderElement>
             <TestnetWrapper>
-              {!isMobile && chainId && NETWORK_LABELS[chainId] && <NetworkCard>{NETWORK_LABELS[chainId]}</NetworkCard>}
+              {!isMobile && chainId && NETWORK_LABELS[chainId] && <NetworkMenu chainId={chainId} network={NETWORK_LABELS[chainId]}></NetworkMenu>}
             </TestnetWrapper>
             <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
               {account && userEthBalance && false ? (
@@ -223,7 +236,7 @@ export default function Header(props: any) {
           </HeaderElement>
           <HeaderElementWrap>
             {/* <VersionSwitch /> */}
-            { isMobile && <ReactiveSetting /> }
+            {isMobile && <Settings key="header-setting" />}
             <Menu />
           </HeaderElementWrap>
         </HeaderControls>

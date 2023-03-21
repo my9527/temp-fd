@@ -1,4 +1,4 @@
-import { Currency, ETHER, Token } from '@uniswap/sdk'
+import { Currency, ETHER, Token } from 'my-uniswap-sdk'
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
@@ -16,12 +16,13 @@ const isFileCoin = (address: string) => {
   return [
     "0x608f45818e53032bEBFe30c629f02966FaB69e96",//weth
     "0xCE3DF008810e8d41aB3275f6EcEa1989b07a2f57", //tdg
+    "0x2646bb363851d31dca3de045e0eb63d0afeb427d"
   ].some(v => v.toLowerCase()===address.toLowerCase())
 }
 
 const getTokenLogoURL = (address: string) => {
   if(isFileCoin(address)) {
-    return  `/images/logos/${address}/logo.svg`;
+    return  `/images/logos/${address.toLowerCase()}/logo.svg`;
   }
   return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
 }

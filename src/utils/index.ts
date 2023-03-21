@@ -1,4 +1,4 @@
-import { delegatedFromEthAddress, CoinType } from '@glif/filecoin-address'
+import { delegatedFromEthAddress, CoinType } from 'filecoin-address'
 
 import { Contract } from '@ethersproject/contracts'
 import { getAddress } from '@ethersproject/address'
@@ -7,7 +7,7 @@ import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import { BigNumber } from '@ethersproject/bignumber'
 import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
 import { ROUTER_ADDRESS } from '../constants'
-import { ChainId, JSBI, Percent, Token, CurrencyAmount, Currency, ETHER } from '@uniswap/sdk'
+import { ChainId, JSBI, Percent, Token, CurrencyAmount, Currency, ETHER } from 'my-uniswap-sdk'
 import { TokenAddressMap } from '../state/lists/hooks'
 
 
