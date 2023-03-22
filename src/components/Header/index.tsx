@@ -109,6 +109,7 @@ const TestnetWrapper = styled.div`
   width: fit-content;
   margin-left: 10px;
   pointer-events: auto;
+  font-weight: 500;
 `
 
 // const NetworkCard = styled(YellowCard)`
@@ -190,7 +191,7 @@ const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
   [ChainId.ROPSTEN]: 'Ropsten',
   [ChainId.GÖRLI]: 'Görli',
   [ChainId.KOVAN]: 'Kovan',
-  [ChainId.FILE]: 'File Mainnet',
+  [ChainId.FILE]: 'FileCoin Mainnet',
   [ChainId.FILEH]: 'Hyperspace',
 }
 
@@ -204,7 +205,7 @@ export default function Header(props: any) {
   return (
     <HeaderFrame>
       <RowBetween style={{ alignItems: 'flex-start' }} padding="1rem 1rem 0 1rem">
-        <HeaderElement style={{ width: "30%"}}>
+        <HeaderElement style={{ width: "30%" }}>
           <Title href="https://www.filedoge.io">
             <UniIcon>
               <img src={isDark ? LogoDark : Logo} alt="logo" />
@@ -215,12 +216,12 @@ export default function Header(props: any) {
             </TitleText>
           </Title>
         </HeaderElement>
-        <HeaderElement style={{ flex: 1}}>
+        <HeaderElement style={{ flex: 1 }}>
           <LeftControls>
             <SwapPoolTabs position="nav" active='swap'></SwapPoolTabs>
           </LeftControls>
         </HeaderElement>
-        <HeaderControls style={{ width: "30%", justifyContent: 'flex-end'}}>
+        <HeaderControls style={{ width: "30%", justifyContent: 'flex-end' }}>
           <HeaderElement>
             <TestnetWrapper>
               {!isMobile && chainId && NETWORK_LABELS[chainId] && <NetworkMenu chainId={chainId} network={NETWORK_LABELS[chainId]}></NetworkMenu>}

@@ -100,13 +100,17 @@ export default function Menu() {
             <Info size={14} />
             About
           </MenuItem>
-          <MenuItem id="link" href={CODE_LINK}>
+          <MenuItem id="link" href={CODE_LINK} target={'_blank'}>
             <Code size={14} />
             Code
           </MenuItem>
           <MenuItem id="link" href="https://discord.gg/JUpWjCmC2K">
             <MessageCircle size={14} />
             Discord
+          </MenuItem>
+          <MenuItem id="link" href="https://twitter.com/Filedogetoken">
+            <MessageCircle size={14} />
+            Twitter
           </MenuItem>
         </MenuFlyout>
       )}

@@ -6,7 +6,7 @@ import FormLogoSvg from "../../assets/svg/form_header.svg"
 
 const Logo = styled.img`
     position: absolute;
-    top: 0;
+    top:-28px;
     left: 50%;
     transform: translate(-50%, -50%);
     ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -18,9 +18,9 @@ const Logo = styled.img`
 
 
 export default () => {
-    return (
-        <div>
-            <Logo src={FormLogoSvg} />
-        </div>
-    )
+  return (
+    <div>
+      <Logo src={FormLogoSvg} />
+    </div>
+  )
 }

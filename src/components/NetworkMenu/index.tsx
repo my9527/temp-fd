@@ -1,6 +1,6 @@
 import { ChainId } from 'my-uniswap-sdk'
 import React, { useCallback, useRef } from 'react'
-import { ChevronDown, Check } from 'react-feather'
+import { Check } from 'react-feather'
 import styled from 'styled-components'
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
@@ -18,13 +18,12 @@ const StyledMenuIcon = styled(MenuIcon)`
 
 const StyledMenuButton = styled.button`
   width: 100%;
-  height: 100%;
+  height: 40px;
   border: none;
   background-color: transparent;
   margin: 0;
   margin-right: 1rem;
-  
-  height: 35px;
+  font-weight: 500;
   // background-color: ${({ theme }) => theme.bg3};
   background-color: #DDE6F5;
 
@@ -108,15 +107,11 @@ const MenuItem = styled(LinkStyledButton)`
   }
 `
 
-const DownIcon = styled(ChevronDown)`
-  width: 1rem;
-`
-
 function dec2hex(i: number) {
-  return (i+0x10000).toString(16).substr(-4).toUpperCase();
+  return (i + 0x10000).toString(16).substr(-4).toUpperCase();
 }
 
-export default function Menu({ network, chainId }: {network: string|null, chainId: number | string}) {
+export default function Menu({ network, chainId }: { network: string | null, chainId: number | string }) {
   const node = useRef<HTMLDivElement>()
   const [open, toggle] = useToggle(false)
 
@@ -144,20 +139,20 @@ export default function Menu({ network, chainId }: {network: string|null, chainI
 
 
   const changeNetwork = useCallback(async (curId, toChainId) => {
-    if(curId === toChainId) {
+    if (curId === toChainId) {
       return
     }
     const targetChainId = `0x${dec2hex(toChainId).replace(/^0+/ig, '')}`;
     try {
       // console.log(dec2hex(toChainId))
-      
+
       // `0x${dec2hex(toChainId).replace(/^0+/ig, '')}`
       // const result = (window.ethereum as any).send('wallet_switchEthereumChain', [{ chainId: targetChainId }]).catch((e:any) => {
       //   console.log(e);
       // })
       await (library?.provider as any).request({
-           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: targetChainId }],
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: targetChainId }],
       })
       // await (window.ethereum as any).request({
       //   method: 'wallet_switchEthereumChain',
@@ -165,10 +160,10 @@ export default function Menu({ network, chainId }: {network: string|null, chainI
       // });
       // // eslint-disable-next-line
       // const result = await window?.ethereum?.send('wallet_switchEthereumChain', [{ chainId: `0x63564C40` }]) // tslint:disable-line
-    }catch(switchError) {
+    } catch (switchError) {
       if (switchError?.code === 4902) {
-        const isMain = toChainId === ChainId.FILE 
-      
+        const isMain = toChainId === ChainId.FILE
+
         await (window?.ethereum as any).request({
           method: 'wallet_addEthereumChain',
           params: [{
@@ -176,12 +171,12 @@ export default function Menu({ network, chainId }: {network: string|null, chainI
             // https://api.hyperspace.node.glif.io/rpc/v1
             rpcUrls: [isMain ? "https://rpc.ankr.com/filecoin" : "https://rpc.ankr.com/filecoin_testnet"],
             chainName: isMain ? 'File Mainnet' : 'Hyperspace',
-            nativeCurrency: { name: isMain ? 'FILE' : 'Test FILE', decimals: 18, symbol: isMain? "FIL": "tFIL" },
+            nativeCurrency: { name: isMain ? 'FILE' : 'Test FILE', decimals: 18, symbol: isMain ? "FIL" : "tFIL" },
             blockExplorerUrls: [ETHERSCAN_PREFIXES[toChainId as ChainId]],
             iconUrls: ['/favicon.svg'],
           }],
         })
-    }
+      }
     }
   }, []);
 
@@ -189,7 +184,7 @@ export default function Menu({ network, chainId }: {network: string|null, chainI
     // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
     <StyledMenu ref={node as any}>
       {account && <StyledMenuButton onClick={toggle}>
-        {network || <StyledMenuIcon />} <DownIcon size={14} />
+        {network || <StyledMenuIcon />}
       </StyledMenuButton>}
       {open && (
         <MenuFlyout>
@@ -197,11 +192,11 @@ export default function Menu({ network, chainId }: {network: string|null, chainI
             Network
           </MenuFlyoutTitle>
           <MenuItem id="link" onClick={() => changeNetwork(chainId, ChainId.FILE)} >
-         
-            <span>{NETWORK_LABELS[314]}</span> {chainId === ChainId.FILE && <Check color='#6CC029' size={24} /> }
+
+            <span>{NETWORK_LABELS[314]}</span> {chainId === ChainId.FILE && <Check color='#6CC029' size={24} />}
           </MenuItem>
           <MenuItem id="link" onClick={() => changeNetwork(chainId, ChainId.FILEH)}>
-            <span>{NETWORK_LABELS[3141]}</span> {chainId === ChainId.FILEH && <Check color='#6CC029' size={24} /> }
+            <span>{NETWORK_LABELS[3141]}</span> {chainId === ChainId.FILEH && <Check color='#6CC029' size={24} />}
           </MenuItem>
         </MenuFlyout>
       )}

@@ -16,6 +16,7 @@ export const BodyWrapper = styled.div`
     0px 24px 32px rgba(0, 0, 0, 0.01);
   border-radius: 30px;
   padding: 1rem;
+  border: 2px solid #000;
 `
 
 /**
@@ -32,6 +33,6 @@ export default function AppBody({ children }: { children: React.ReactNode }) {
     dispatch(selectList(`${window.location.origin}/tokens/list.json`));
   }, []);
 
-  
+
   return <BodyWrapper>{children}</BodyWrapper>
 }

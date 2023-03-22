@@ -8,7 +8,7 @@ import { ArrowLeft } from 'react-feather'
 import { RowBetween } from '../Row'
 import QuestionHelper from '../QuestionHelper'
 
-import Settings  from '../Settings'
+import Settings from '../Settings'
 import { isMobile } from 'react-device-detect'
 
 const Tabs = styled.div`
@@ -75,11 +75,11 @@ const MobileTabs = styled(Tabs)`
   `};
 `
 
-const PcTabs = styled(Tabs)<{position: 'nav' | 'form'}>`
+const PcTabs = styled(Tabs) <{ position: 'nav' | 'form' }>`
   margin-bottom: 20px;
-  display: ${({ position }) => position === 'nav' ? 'flex':'none'};
+  display: ${({ position }) => position === 'nav' ? 'flex' : 'none'};
   ${({ theme, position }) => theme.mediaWidth.upToExtraSmall`
-    display: ${position === 'nav' ? 'none':'flex'};
+    display: ${position === 'nav' ? 'none' : 'flex'};
   `};
 `
 
@@ -119,7 +119,7 @@ const PcTabs = styled(Tabs)<{position: 'nav' | 'form'}>`
 
 
 
-export function SwapPoolTabs({ active, position }: { active: 'swap' | 'pool', position: 'nav'| 'form' }) {
+export function SwapPoolTabs({ active, position }: { active: 'swap' | 'pool', position: 'nav' | 'form' }) {
   const { t } = useTranslation()
   const location = useLocation()
 
@@ -134,17 +134,17 @@ export function SwapPoolTabs({ active, position }: { active: 'swap' | 'pool', po
         {t('pool')}
       </StyledNavLink>
       <StyledNavLink style={{ pointerEvents: 'none' }} aria-disabled id={`nft-nav-link`} to={'/nft'} isActive={() => curPath === '/nft'}>
-        NFT
+        NFTs
       </StyledNavLink>
     </PcTabs>
   )
 }
 
-export function SwapPoolTabsNew({ type }: { type: 'swap'|'pool'}) {
+export function SwapPoolTabsNew({ type }: { type: 'swap' | 'pool' }) {
   return (
     <MobileTabs >
-        <StyledTitle>{ type === 'swap' ? 'Swap' : 'Pool' }</StyledTitle>
-        {!isMobile && <Settings />}
+      <StyledTitle>{type === 'swap' ? 'Swap' : 'Pool'}</StyledTitle>
+      {!isMobile && <Settings />}
     </MobileTabs>
   )
 }
