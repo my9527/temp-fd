@@ -50,7 +50,7 @@ const StyledMenuButton = styled.button`
   margin: 0;
   padding: 0;
   height: 35px;
-  background-color: ${({ theme }) => theme.bg3};
+  // background-color: ${({ theme }) => theme.bg3};
 
   padding: 0.15rem 0.5rem;
   border-radius: 0.5rem;
@@ -98,11 +98,12 @@ const MenuFlyout = styled.span`
   position: absolute;
   top: 3rem;
   right: 0rem;
-  z-index: 100;
+  z-index: 100000;
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     min-width: 18.125rem;
     right: -46px;
+    z-index: 100;
   `};
 `
 
@@ -228,7 +229,7 @@ export default function SettingsTab() {
                 }
               />
             </RowBetween>
-            <RowBetween>
+            <RowBetween style={{ display: 'none' }}>
               <RowFixed>
                 <TYPE.black fontWeight={400} fontSize={14} color={theme.text2}>
                   Toggle Dark Mode

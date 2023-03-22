@@ -1,9 +1,9 @@
-import { ChainId, JSBI, Percent, Token, WETH } from '@uniswap/sdk'
+import { ChainId, JSBI, Percent, Token, WETH } from 'my-uniswap-sdk'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 
 import { fortmatic, injected, portis, walletconnect, walletlink } from '../connectors'
 
-export const ROUTER_ADDRESS = '0x589D94a2E5Da5c40bFa0b162Dc0fC68646FD1F53'
+export const ROUTER_ADDRESS = '0x6C29c4366a2f9Ac5F083ef3394D9849b02a690C0'
 
 // a list of tokens by chain
 type ChainTokenList = {
@@ -16,9 +16,28 @@ export const USDT = new Token(ChainId.MAINNET, '0xdAC17F958D2ee523a2206206994597
 export const COMP = new Token(ChainId.MAINNET, '0xc00e94Cb662C3520282E6f5717214004A7f26888', 18, 'COMP', 'Compound')
 export const MKR = new Token(ChainId.MAINNET, '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2', 18, 'MKR', 'Maker')
 export const AMPL = new Token(ChainId.MAINNET, '0xD46bA6D942050d489DBd938a2C909A5d5039A161', 9, 'AMPL', 'Ampleforth')
-export const FILEDOGE = new Token(ChainId.FILE, '0xCE3DF008810e8d41aB3275f6EcEa1989b07a2f57', 18, 'FILEDOGE', 'File Doge')
-export const FILEDOGEH = new Token(ChainId.FILEH, '0xCE3DF008810e8d41aB3275f6EcEa1989b07a2f57', 18, 'FILEDOGE', 'File Doge')
+export const FILEDOGE = new Token(ChainId.FILE, '0x2646BB363851d31DcA3DE045e0eB63d0aFeB427D', 18, 'FILEDOGE', 'File Doge')
+export const FILEDOGEH = new Token(ChainId.FILEH, '0xCE3DF008810e8d41aB3275f6EcEa1989b07a2f57', 18, 'FILEDOGE', 'Testnet File Doge')
 
+export const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
+  [ChainId.MAINNET]: null,
+  [ChainId.RINKEBY]: 'Rinkeby',
+  [ChainId.ROPSTEN]: 'Ropsten',
+  [ChainId.GÖRLI]: 'Görli',
+  [ChainId.KOVAN]: 'Kovan',
+  [ChainId.FILE]: 'FileCoin Mainnet',
+  [ChainId.FILEH]: 'Hyperspace',
+}
+
+export const ETHERSCAN_PREFIXES: { [chainId in ChainId]: string } = {
+  1: '',
+  3: 'ropsten.',
+  4: 'rinkeby.',
+  5: 'goerli.',
+  42: 'kovan.',
+  314: 'https://filfox.info/en',
+  3141: 'https://hyperspace.filfox.info/en'
+}
 
 const WETH_ONLY: ChainTokenList = {
   [ChainId.MAINNET]: [WETH[ChainId.MAINNET]],

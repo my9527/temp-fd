@@ -21,6 +21,7 @@ import RemoveLiquidity from './RemoveLiquidity'
 import { RedirectOldRemoveLiquidityPathStructure } from './RemoveLiquidity/redirects'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+import { useActiveWeb3React } from '../hooks'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -47,7 +48,7 @@ const BodyWrapper = styled.div`
   z-index: 10;
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      padding: 16px;
+      padding: 5rem 16px 16px 16px;
   `};
 
   z-index: 1;
@@ -58,12 +59,13 @@ const Marginer = styled.div`
 `
 
 export default function App() {
+  const { chainId } = useActiveWeb3React()
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={null} key={chainId}>
       <HashRouter>
         <Route component={GoogleAnalyticsReporter} />
         <Route component={DarkModeQueryParamReader} />
-        <AppWrapper>
+        <AppWrapper >
           <HeaderWrapper>
             <Header />
           </HeaderWrapper>

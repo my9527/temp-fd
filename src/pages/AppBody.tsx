@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import { useAddUserToken } from '../state/user/hooks'
 import { FILEDOGEH } from '../constants'
 
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../state'
+import { selectList } from '../state/lists/actions'
+
 export const BodyWrapper = styled.div`
   position: relative;
   max-width: 420px;
@@ -12,6 +16,7 @@ export const BodyWrapper = styled.div`
     0px 24px 32px rgba(0, 0, 0, 0.01);
   border-radius: 30px;
   padding: 1rem;
+  border: 2px solid #000;
 `
 
 /**
@@ -20,11 +25,14 @@ export const BodyWrapper = styled.div`
 export default function AppBody({ children }: { children: React.ReactNode }) {
 
   const addToken = useAddUserToken()
+  const dispatch = useDispatch<AppDispatch>()
 
+  // 配置默认token， 配置list
   useEffect(() => {
     addToken(FILEDOGEH);
+    dispatch(selectList(`${window.location.origin}/tokens/list.json`));
   }, []);
 
-  
+
   return <BodyWrapper>{children}</BodyWrapper>
 }

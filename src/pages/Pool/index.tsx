@@ -1,9 +1,9 @@
 import React, { useContext, useMemo } from 'react'
 import { ThemeContext } from 'styled-components'
-import { Pair } from '@uniswap/sdk'
+import { Pair } from 'my-uniswap-sdk'
 import { Link } from 'react-router-dom'
-import { SwapPoolTabs } from '../../components/NavigationTabs'
-
+// import { SwapPoolTabs } from '../../components/NavigationTabs'
+import { SwapPoolTabs, SwapPoolTabsNew } from '../../components/NavigationTabs'
 import Question from '../../components/QuestionHelper'
 import FullPositionCard from '../../components/PositionCard'
 import { useUserHasLiquidityInAllTokens } from '../../data/V1'
@@ -20,6 +20,7 @@ import { usePairs } from '../../data/Reserves'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
 import AppBody from '../AppBody'
 import { Dots } from '../../components/swap/styleds'
+import FormLogo from '../../components/FormLogo/formLogo'
 
 export default function Pool() {
   const theme = useContext(ThemeContext)
@@ -59,7 +60,9 @@ export default function Pool() {
   return (
     <>
       <AppBody>
-        <SwapPoolTabs active={'pool'} />
+       <FormLogo />
+        <SwapPoolTabs position='form' active={'pool'} />
+        <SwapPoolTabsNew type={'pool'} />
         <AutoColumn gap="lg" justify="center">
           <ButtonPrimary id="join-pool-button" as={Link} style={{ padding: 16 }} to="/add/ETH">
             <Text fontWeight={500} fontSize={20}>

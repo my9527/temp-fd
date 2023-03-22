@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 
 export default function Updater(): null {
   const { library, chainId } = useActiveWeb3React()
+
   const dispatch = useDispatch()
 
   const windowVisible = useIsWindowVisible()
@@ -23,6 +24,7 @@ export default function Updater(): null {
           if (typeof state.blockNumber !== 'number') return { chainId, blockNumber }
           return { chainId, blockNumber: Math.max(blockNumber, state.blockNumber) }
         }
+        console.log('changed', state)
         return state
       })
     },
@@ -40,7 +42,11 @@ export default function Updater(): null {
       .then(blockNumberCallback)
       .catch(error => console.error(`Failed to get block number for chainId: ${chainId}`, error))
 
-    library.on('block', blockNumberCallback)
+    try{
+      library.on('block', blockNumberCallback)
+    }catch(e) {
+      console.log("eeee", e)
+    }
     return () => {
       library.removeListener('block', blockNumberCallback)
     }

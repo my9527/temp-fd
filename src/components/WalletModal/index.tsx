@@ -18,6 +18,12 @@ import { injected, fortmatic, portis } from '../../connectors'
 import { OVERLAY_READY } from '../../connectors/Fortmatic'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { AbstractConnector } from '@web3-react/abstract-connector'
+import { switchNetwork } from '../../utils/switchNetwork'
+import { ChainId } from 'my-uniswap-sdk'
+// import { Web3StatusConnect } from '../../connectors'
+import { Web3StatusConnect } from '../Web3Status'
+// import { ChainId } from 'my-uniswap-sdk'
+// import { useActiveWeb3React } from '../../hooks'
 
 const CloseIcon = styled.div`
   position: absolute;
@@ -115,6 +121,9 @@ const WALLET_VIEWS = {
   PENDING: 'pending'
 }
 
+
+
+
 export default function WalletModal({
   pendingTransactions,
   confirmedTransactions,
@@ -126,6 +135,7 @@ export default function WalletModal({
 }) {
   // important that these are destructed from the account-specific web3-react context
   const { active, account, connector, activate, error } = useWeb3React()
+  // const { library } = useActiveWeb3React()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
@@ -185,9 +195,15 @@ export default function WalletModal({
     }
 
     connector &&
-      activate(connector, undefined, true).catch(error => {
+      activate(connector, undefined, true).catch(async error => {
         if (error instanceof UnsupportedChainIdError) {
+          // alert("UnsupportedChainIdError")
+          // change network first
+          
           activate(connector) // a little janky...can't use setError because the connector isn't set
+          setTimeout(() => {
+            switchNetwork(ChainId.FILE);
+          }, 10)
         } else {
           setPendingError(true)
         }
@@ -297,10 +313,13 @@ export default function WalletModal({
           <HeaderRow>{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error connecting'}</HeaderRow>
           <ContentWrapper>
             {error instanceof UnsupportedChainIdError ? (
-              <h5>Please connect to the appropriate Ethereum network.</h5>
+              <h5>Please connect to the appropriate FileCoin network.</h5>
             ) : (
               'Error connecting. Try refreshing the page.'
             )}
+            <Web3StatusConnect style={{ background: "#FFE9C8" }} faded={false} onClick={() => switchNetwork(ChainId.FILE)}>
+              Switch to FileCoin Mainnet
+            </Web3StatusConnect>
           </ContentWrapper>
         </UpperSection>
       )
