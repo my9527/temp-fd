@@ -23,7 +23,7 @@ export const switchNetwork = async (targetChainId: number) => {
                   chainId: targetChainIdHex,
                   // https://api.hyperspace.node.glif.io/rpc/v1
                   rpcUrls: [isMain ? "https://rpc.ankr.com/filecoin" : "https://rpc.ankr.com/filecoin_testnet"],
-                  chainName: isMain ? 'File Mainnet' : 'Hyperspace',
+                  chainName: isMain ? 'FileCoin Mainnet' : 'Hyperspace',
                   nativeCurrency: { name: isMain ? 'FILE' : 'Test FILE', decimals: 18, symbol: isMain? "FIL": "tFIL" },
                   blockExplorerUrls: [ETHERSCAN_PREFIXES[targetChainId as ChainId]],
                   iconUrls: ['/favicon.svg'],

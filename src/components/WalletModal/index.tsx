@@ -313,12 +313,12 @@ export default function WalletModal({
           <HeaderRow>{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error connecting'}</HeaderRow>
           <ContentWrapper>
             {error instanceof UnsupportedChainIdError ? (
-              <h5>Please connect to the appropriate Filecoin network.</h5>
+              <h5>Please connect to the appropriate FileCoin network.</h5>
             ) : (
               'Error connecting. Try refreshing the page.'
             )}
             <Web3StatusConnect style={{ background: "#FFE9C8" }} faded={false} onClick={() => switchNetwork(ChainId.FILE)}>
-              Switch to File Mainnet
+              Switch to FileCoin Mainnet
             </Web3StatusConnect>
           </ContentWrapper>
         </UpperSection>

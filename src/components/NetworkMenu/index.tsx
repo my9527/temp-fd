@@ -170,7 +170,7 @@ export default function Menu({ network, chainId }: { network: string | null, cha
             chainId: targetChainId,
             // https://api.hyperspace.node.glif.io/rpc/v1
             rpcUrls: [isMain ? "https://rpc.ankr.com/filecoin" : "https://rpc.ankr.com/filecoin_testnet"],
-            chainName: isMain ? 'File Mainnet' : 'Hyperspace',
+            chainName: isMain ? 'FileCoin Mainnet' : 'Hyperspace',
             nativeCurrency: { name: isMain ? 'FILE' : 'Test FILE', decimals: 18, symbol: isMain ? "FIL" : "tFIL" },
             blockExplorerUrls: [ETHERSCAN_PREFIXES[toChainId as ChainId]],
             iconUrls: ['/favicon.svg'],
@@ -195,9 +195,9 @@ export default function Menu({ network, chainId }: { network: string | null, cha
 
             <span>{NETWORK_LABELS[314]}</span> {chainId === ChainId.FILE && <Check color='#6CC029' size={24} />}
           </MenuItem>
-          <MenuItem id="link" onClick={() => changeNetwork(chainId, ChainId.FILEH)}>
+          {/* <MenuItem id="link" onClick={() => changeNetwork(chainId, ChainId.FILEH)}>
             <span>{NETWORK_LABELS[3141]}</span> {chainId === ChainId.FILEH && <Check color='#6CC029' size={24} />}
-          </MenuItem>
+          </MenuItem> */}
         </MenuFlyout>
       )}
     </StyledMenu>

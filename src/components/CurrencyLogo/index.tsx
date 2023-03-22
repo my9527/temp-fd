@@ -15,7 +15,7 @@ const isFileCoin = (address: string) => {
   if(!address) return false;
   return [
     // "0x608f45818e53032bEBFe30c629f02966FaB69e96",//weth
-    "0x4055867e43E27Dd0d8e12CE4c2dBD313286B011a",
+    "0xA35Bf7ef23B09fb099e6e75A078727dFf14b7576",
     "0xCE3DF008810e8d41aB3275f6EcEa1989b07a2f57", //tdg
     "0x2646bb363851d31dca3de045e0eb63d0afeb427d"
   ].some(v => v.toLowerCase()===address.toLowerCase())

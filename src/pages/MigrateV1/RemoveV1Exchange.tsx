@@ -79,7 +79,7 @@ function V1PairRemoval({
         })
 
         addTransaction(response, {
-          summary: `Remove ${chainId && token.equals(WETH[chainId]) ? 'WETH' : token.symbol}/ETH V1 liquidity`
+          summary: `Remove ${chainId && token.equals(WETH[chainId]) ? 'WFIL' : token.symbol}/FIL V1 liquidity`
         })
         setPendingRemovalHash(response.hash)
       })
@@ -118,9 +118,9 @@ function V1PairRemoval({
         </div>
       </LightCard>
       <TYPE.darkGray style={{ textAlign: 'center' }}>
-        {`Your Uniswap V1 ${
-          chainId && token.equals(WETH[chainId]) ? 'WETH' : token.symbol
-        }/ETH liquidity will be redeemed for underlying assets.`}
+        {`Your FILEDOGESwap V1 ${
+          chainId && token.equals(WETH[chainId]) ? 'WFIL' : token.symbol
+        }/FIL liquidity will be redeemed for underlying assets.`}
       </TYPE.darkGray>
     </AutoColumn>
   )
@@ -141,7 +141,7 @@ export default function RemoveV1Exchange({
   const liquidityToken: Token | undefined = useMemo(
     () =>
       validatedAddress && chainId && token
-        ? new Token(chainId, validatedAddress, 18, `UNI-V1-${token.symbol}`, 'Uniswap V1')
+        ? new Token(chainId, validatedAddress, 18, `FILEDOGE-${token.symbol}`, 'FILEDOGESwap V1')
         : undefined,
     [chainId, validatedAddress, token]
   )
@@ -160,7 +160,7 @@ export default function RemoveV1Exchange({
           <BackArrow to="/migrate/v1" />
           <TYPE.mediumHeader>Remove V1 Liquidity</TYPE.mediumHeader>
           <div>
-            <QuestionHelper text="Remove your Uniswap V1 liquidity tokens." />
+            <QuestionHelper text="Remove your FILEDOGESwap V1 liquidity tokens." />
           </div>
         </AutoRow>
 

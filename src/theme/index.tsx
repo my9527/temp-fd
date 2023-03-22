@@ -219,6 +219,16 @@ html {
   // background-color: ${({ theme }) => theme.bg};
   background: linear-gradient(180deg, #E6EEFF 0%, #FFFFFF 100%);
 }
+.toast{
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  transform: translate( -50%, 0);
+  z-index: 1000;
+  background-color: #FFAD06;
+  border-radius: 8px;
+
+}
 
 body {
   min-height: 100vh;

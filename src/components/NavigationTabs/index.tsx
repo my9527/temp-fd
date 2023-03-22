@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { darken } from 'polished'
 import { useTranslation } from 'react-i18next'
 import { NavLink, Link as HistoryLink, useLocation } from 'react-router-dom'
+// import { ExternalLink } from '../../theme'
 
 import { ArrowLeft } from 'react-feather'
 import { RowBetween } from '../Row'
@@ -83,6 +84,21 @@ const PcTabs = styled(Tabs) <{ position: 'nav' | 'form' }>`
   `};
 `
 
+const toast = (msg: string) => {
+  let target = document.createElement("div");
+  target.innerHTML = `<div style=" color: white;padding: 12px 24px; border-radius: 4px">${msg}</div>`;
+  target.classList.add("toast")
+ 
+  document.body.append(target);
+  setTimeout(() => {
+    try{
+      target && target.remove();
+    } catch(e){
+      console.log(e);
+    }
+  }, 1000)
+}
+
 // const StyledMenuButton = styled.button`
 //   position: relative;
 //   width: 100%;
@@ -117,6 +133,22 @@ const PcTabs = styled(Tabs) <{ position: 'nav' | 'form' }>`
 //   }
 // `
 
+// const HomeLink = styled(ExternalLink)`
+//   color: #888D9B;
+//   font-size: 18px;
+//   text-decoration: none;
+//   font-weight: normal;
+//   margin-right: 3rem;
+//   outline: none;
+//   cursor: pointer;
+//   text-decoration: none;
+//   :hover,
+//   :focus {
+//     color: ${({ theme }) => darken(0.1, theme.text1)};
+//     text-decoration: none;
+//   }
+// `
+
 
 
 export function SwapPoolTabs({ active, position }: { active: 'swap' | 'pool', position: 'nav' | 'form' }) {
@@ -125,15 +157,25 @@ export function SwapPoolTabs({ active, position }: { active: 'swap' | 'pool', po
 
   const curPath = location.pathname;
 
+  const showMessge = () => {
+    toast("Coming soon!")
+  }
+
   return (
     <PcTabs position={position} style={{ marginBottom: '20px' }}>
-      <StyledNavLink id={`swap-nav-link`} to={'/swap'} isActive={() => curPath === '/swap'}>
+      <StyledNavLink onClick={(e) => {
+        e.preventDefault(); 
+        window.location.href="https://filedoge.io"
+      }}  to={'/'} isActive={() => false}>
+        Home
+      </StyledNavLink>
+      <StyledNavLink id={`swap-nav-link`} to={'/swap'}  isActive={() => curPath === '/swap'}>
         {t('swap')}
       </StyledNavLink>
       <StyledNavLink id={`pool-nav-link`} to={'/pool'} isActive={() => curPath === '/pool'}>
         {t('pool')}
       </StyledNavLink>
-      <StyledNavLink style={{ pointerEvents: 'none' }} aria-disabled id={`nft-nav-link`} to={'/nft'} isActive={() => curPath === '/nft'}>
+      <StyledNavLink onClick={showMessge}  aria-disabled id={`nft-nav-link`} to={'/nft'} isActive={() => curPath === '/nft'}>
         NFTs
       </StyledNavLink>
     </PcTabs>

@@ -92,8 +92,8 @@ export function tryParseAmount(value?: string, currency?: Currency): CurrencyAmo
 const BAD_RECIPIENT_ADDRESSES: string[] = [
   // '0x022831C01390280BD03Ed2681cD96b49B9018c4E', // v2 factory
   '0x96B282AAAE32E4999503fac02754AEc5495ae0a4',
-  '0x767FF42c6F6c45c544424c47Fcdd1AE02df8bE0b', // v2 router 01
-  '0x767FF42c6F6c45c544424c47Fcdd1AE02df8bE0b' // v2 router 02
+  '0x6C29c4366a2f9Ac5F083ef3394D9849b02a690C0', // v2 router 01
+  '0x6C29c4366a2f9Ac5F083ef3394D9849b02a690C0' // v2 router 02
 ]
 
 /**
@@ -129,6 +129,8 @@ export function useDerivedSwapInfo(): {
     recipient
   } = useSwapState()
 
+  console.log("inputCurrencyId ==>", outputCurrencyId)
+
   const inputCurrency = useCurrency(inputCurrencyId)
   const outputCurrency = useCurrency(outputCurrencyId)
   const recipientLookup = useENS(recipient ?? undefined)
@@ -156,6 +158,8 @@ export function useDerivedSwapInfo(): {
     [Field.INPUT]: inputCurrency ?? undefined,
     [Field.OUTPUT]: outputCurrency ?? undefined
   }
+
+  console.log("useV1Trade", currencies)
 
   // get link to trade on v1, if a better rate exists
   const v1Trade = useV1Trade(isExactIn, currencies[Field.INPUT], currencies[Field.OUTPUT], parsedAmount)
