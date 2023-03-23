@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Info, Code, MessageCircle } from 'react-feather'
+import { Info, Code, MessageCircle, Twitter } from 'react-feather'
 import styled from 'styled-components'
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
@@ -96,20 +96,20 @@ export default function Menu() {
       </StyledMenuButton>
       {open && (
         <MenuFlyout>
-          <MenuItem id="link" href="https://www.filedoge.io/">
+          <MenuItem rel='nofollow' id="link" href="https://www.filedoge.io/">
             <Info size={14} />
             About
           </MenuItem>
-          <MenuItem id="link" href={CODE_LINK} target={'_blank'}>
+          <MenuItem rel='nofollow' id="link" href={CODE_LINK} target={'_blank'}>
             <Code size={14} />
             Code
           </MenuItem>
-          <MenuItem id="link" href="https://discord.com/invite/FM2WY62FR4">
+          <MenuItem rel='nofollow' id="link" href="https://discord.com/invite/FM2WY62FR4">
             <MessageCircle size={14} />
             Discord
           </MenuItem>
           <MenuItem id="link" href="https://twitter.com/Filedogetoken">
-            <MessageCircle size={14} />
+            <Twitter size={14} />
             Twitter
           </MenuItem>
         </MenuFlyout>

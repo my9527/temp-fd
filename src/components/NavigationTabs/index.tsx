@@ -52,7 +52,7 @@ const StyledNavLink = styled(NavLink).attrs({
   }
 `
 
-const ActiveText = styled.div`
+const ActiveText = styled.h1`
   font-weight: 500;
   font-size: 20px;
 `
@@ -61,7 +61,12 @@ const StyledArrowLeft = styled(ArrowLeft)`
   color: ${({ theme }) => theme.text1};
 `
 
-const StyledTitle = styled.span`
+// const StyledTitle = styled.span`
+//   font-weight: 500;
+//   font-size: 24px;
+//   line-height: 150%;
+// `
+const StyledTitleH1 = styled.h1`
   font-weight: 500;
   font-size: 24px;
   line-height: 150%;
@@ -185,7 +190,7 @@ export function SwapPoolTabs({ active, position }: { active: 'swap' | 'pool', po
 export function SwapPoolTabsNew({ type }: { type: 'swap' | 'pool' }) {
   return (
     <MobileTabs >
-      <StyledTitle>{type === 'swap' ? 'Swap' : 'Pool'}</StyledTitle>
+      <StyledTitleH1>{type === 'swap' ? 'Swap' : 'Pool'}</StyledTitleH1>
       {!isMobile && <Settings />}
     </MobileTabs>
   )
