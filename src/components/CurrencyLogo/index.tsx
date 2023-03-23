@@ -23,7 +23,7 @@ const isFileCoin = (address: string) => {
 
 const getTokenLogoURL = (address: string) => {
   if(isFileCoin(address)) {
-    return  `/images/logos/${address.toLowerCase()}/logo.svg`;
+    return  `./images/logos/${address.toLowerCase()}/logo.svg`;
   }
   return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
 }

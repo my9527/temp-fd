@@ -70,7 +70,7 @@ export default function CommonBases({
             address: targetCoin.address, // The address that the token is at.
             symbol: targetCoin.symbol, // A ticker symbol or shorthand, up to 5 chars.
             decimals: targetCoin.decimals, // The number of decimals in the token
-            image: `/images/logos/${targetCoin.address}/logo.svg`, // A string url of the token logo
+            image: `./images/logos/${targetCoin.address}/logo.svg`, // A string url of the token logo
           },
         },
       });
