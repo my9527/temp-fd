@@ -23,7 +23,6 @@ export function computeTradePriceBreakdown(
         )
       )
 
-      console.log("realizedLPFee", realizedLPFee)
 
   // remove lp fees from price impact
   const priceImpactWithoutFeeFraction = trade && realizedLPFee ? trade.priceImpact.subtract(realizedLPFee) : undefined

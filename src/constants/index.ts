@@ -22,6 +22,9 @@ export const FILEDOGEH = new Token(ChainId.FILEH, '0xCE3DF008810e8d41aB3275f6EcE
 export const FLD = new Token(ChainId.FILE, '0x7b90337f65faa2b2b8ed583ba1ba6eb0c9d7ea44', 18, 'FLD', 'filadoge')
 
 
+export const CommonBaseTokens = [FILEDOGE, FLD];
+
+
 export const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
   [ChainId.MAINNET]: null,
   [ChainId.RINKEBY]: 'Rinkeby',

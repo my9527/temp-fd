@@ -12,7 +12,8 @@ import {
   updateUserDarkMode,
   updateUserExpertMode,
   updateUserSlippageTolerance,
-  updateUserDeadline
+  updateUserDeadline,
+  addSerializedTokens
 } from './actions'
 
 const currentTimestamp = () => new Date().getTime()
@@ -51,6 +52,13 @@ export interface UserState {
 function pairKey(token0Address: string, token1Address: string) {
   return `${token0Address};${token1Address}`
 }
+
+// const initialTokens = [FILEDOGE, FLD].reduce((result, cur) => {
+//   return {
+//     ...result,
+    
+//   }
+// }, {});
 
 export const initialState: UserState = {
   userDarkMode: null,
@@ -101,10 +109,17 @@ export default createReducer(initialState, builder =>
       state.timestamp = currentTimestamp()
     })
     .addCase(addSerializedToken, (state, { payload: { serializedToken } }) => {
-      console.log("serializedToken", serializedToken)
       state.tokens[serializedToken.chainId] = state.tokens[serializedToken.chainId] || {}
       state.tokens[serializedToken.chainId][serializedToken.address] = serializedToken
       state.timestamp = currentTimestamp()
+    })
+    .addCase(addSerializedTokens, (state, { payload: { serializedTokens }}) => {
+       const tokens = serializedTokens.reduce((result:any, cur) => {
+          result[cur.chainId] = result[cur.chainId] || {};
+          result[cur.chainId][cur.address] = cur;
+          return result;
+       }, {});
+       state.tokens = tokens;
     })
     .addCase(removeSerializedToken, (state, { payload: { address, chainId } }) => {
       state.tokens[chainId] = state.tokens[chainId] || {}

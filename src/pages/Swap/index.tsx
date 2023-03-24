@@ -35,7 +35,8 @@ import {
   useDefaultsFromURLSearch,
   useDerivedSwapInfo,
   useSwapActionHandlers,
-  useSwapState
+  useSwapState,
+  useDerivedSwapInfoOnlyCurrency
 } from '../../state/swap/hooks'
 import { useExpertModeManager, useUserDeadline, useUserSlippageTolerance } from '../../state/user/hooks'
 import { LinkStyledButton, TYPE } from '../../theme'
@@ -86,9 +87,13 @@ export default function Swap() {
     v2Trade,
     currencyBalances,
     parsedAmount,
-    currencies,
     inputError: swapInputError
   } = useDerivedSwapInfo()
+
+  const {
+    currencies,
+  } = useDerivedSwapInfoOnlyCurrency()
+  console.log("currencies", currencies)
   const { wrapType, execute: onWrap, inputError: wrapInputError } = useWrapCallback(
     currencies[Field.INPUT],
     currencies[Field.OUTPUT],

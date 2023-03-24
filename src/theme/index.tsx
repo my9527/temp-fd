@@ -95,7 +95,6 @@ export function colors(darkMode: boolean): Colors {
 }
 
 export function theme(darkModes: boolean): DefaultTheme {
-  console.log(darkModes);
   const darkMode = false;
   return {
     ...colors(darkMode),
