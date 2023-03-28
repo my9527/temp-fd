@@ -6,6 +6,9 @@ import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import useToggle from '../../hooks/useToggle'
 
 import { ExternalLink } from '../../theme'
+// import Telegram from '../Icons/telegram'
+import TelegramSvg from '../../assets/svg/telegram.svg'
+
 
 const StyledMenuIcon = styled(MenuIcon)`
   path {
@@ -104,13 +107,17 @@ export default function Menu() {
             <Code size={14} />
             Code
           </MenuItem>
-          <MenuItem rel='nofollow' id="link" href="https://discord.com/invite/FM2WY62FR4">
+          <MenuItem rel='nofollow' id="link" href="https://discord.gg/filedoge">
             <MessageCircle size={14} />
             Discord
           </MenuItem>
           <MenuItem id="link" href="https://twitter.com/Filedogetoken">
             <Twitter size={14} />
             Twitter
+          </MenuItem>
+          <MenuItem id="link" href="https://t.me/filedogetoken">
+            <img src={TelegramSvg} style={{ display: "inline", width: "14px", height: "14px", marginRight: "8px" , transform: "translateY(1px)"}} />
+            Telegram
           </MenuItem>
         </MenuFlyout>
       )}
