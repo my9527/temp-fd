@@ -21,8 +21,10 @@ export const FILEDOGE = new Token(ChainId.FILE, '0x2646BB363851d31DcA3DE045e0eB6
 export const FILEDOGEH = new Token(ChainId.FILEH, '0xCE3DF008810e8d41aB3275f6EcEa1989b07a2f57', 18, 'FILEDOGE', 'Testnet File Doge')
 export const FLD = new Token(ChainId.FILE, '0x7b90337f65faa2b2b8ed583ba1ba6eb0c9d7ea44', 18, 'FLD', 'filadoge')
 
-
-export const CommonBaseTokens = [FILEDOGE, FLD];
+export const FILDAO = new Token(ChainId.FILE, '0xa74a49619E7494638a4C74891d65AEB0AF5dEfcf', 18, 'FILDAO', 'FILDAO')
+export const FSB = new Token(ChainId.FILE, '0x23C84BED51216245786f5F61Bc92a3F0eC1Ecf89', 18, 'FSB', 'FileShib Token')
+// base 中显示的
+export const CommonBaseTokens = [FILEDOGE, FLD, FILDAO, FSB];
 
 
 export const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
@@ -51,7 +53,7 @@ const WETH_ONLY: ChainTokenList = {
   [ChainId.RINKEBY]: [WETH[ChainId.RINKEBY]],
   [ChainId.GÖRLI]: [WETH[ChainId.GÖRLI]],
   [ChainId.KOVAN]: [WETH[ChainId.KOVAN]],
-  [ChainId.FILE]: [WETH[ChainId.FILE], FILEDOGE, FLD],
+  [ChainId.FILE]: [...CommonBaseTokens],
   [ChainId.FILEH]: [WETH[ChainId.FILEH], FILEDOGEH],
 }
 

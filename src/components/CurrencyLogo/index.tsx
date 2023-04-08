@@ -25,9 +25,28 @@ const isFileCoin = (address: string, chainId: ChainId) => {
   return false;
 }
 
+type LogoTypesSpecifiedInterface = {
+  [key: string]: string
+}
+const LogoTypesSpecified: LogoTypesSpecifiedInterface= {
+  "0xa74a49619e7494638a4c74891d65aeb0af5defcf": "png",
+}
+
+const LogoExternalLink: LogoTypesSpecifiedInterface = {
+  "0x23c84bed51216245786f5f61bc92a3f0ec1ecf89": "https://www.filedoge.io/assets/coin/0x23c84bed51216245786f5f61bc92a3f0ec1ecf89.png",
+  "0xa74a49619e7494638a4c74891d65aeb0af5defcf": "https://www.filedoge.io/assets/coin/0xa74a49619e7494638a4c74891d65aeb0af5defcf.png",
+  "0x2646bb363851d31dca3de045e0eb63d0afeb427d": "https://www.filedoge.io/assets/coin/0x2646bb363851d31dca3de045e0eb63d0afeb427d.png"
+}
+
+
 const getTokenLogoURL = (address: string, chainId: ChainId) => {
   if(isFileCoin(address, chainId)) {
-    return  `./images/logos/${address.toLowerCase()}/logo.svg`;
+    const _lowerAddress: string = address.toLowerCase();
+    if(LogoExternalLink[_lowerAddress]) {
+      return LogoExternalLink[_lowerAddress]
+    }
+    const logoType = LogoTypesSpecified[_lowerAddress] || 'svg';
+    return  `./images/logos/${_lowerAddress}/logo.${logoType}`;
   }
   return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
 }

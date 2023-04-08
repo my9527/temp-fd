@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useAddUserToken } from '../state/user/hooks'
-import { FILEDOGE, FILEDOGEH, FLD } from '../constants'
+import { FILEDOGE, FILEDOGEH, FLD, FILDAO, FSB } from '../constants'
 
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../state'
@@ -32,6 +32,8 @@ export default function AppBody({ children }: { children: React.ReactNode }) {
     addToken(FILEDOGEH);
     addToken(FILEDOGE);
     addToken(FLD);
+    addToken(FILDAO);
+    addToken(FSB);
     dispatch(selectList(`${window.location.origin}/tokens/list.json`));
   }, []);
 

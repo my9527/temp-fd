@@ -271,6 +271,18 @@ export default function Swap() {
   )
 
   const handleMaxInput = useCallback(() => {
+    // 未避免用户操作后无手续费，这里至少留存0.05 fil
+    // const prekeep = CurrencyAmount.ether("50000000000000000");
+    // let target;
+    // if(maxAmountInput) {
+    //   if(maxAmountInput.greaterThan(prekeep)){
+    //     target = maxAmountInput.subtract(prekeep).toExact()
+
+    //   } else {
+    //     target = maxAmountInput.toExact()
+    //   }
+    //   onUserInput(Field.INPUT, target);
+    // }
     maxAmountInput && onUserInput(Field.INPUT, maxAmountInput.toExact())
   }, [maxAmountInput, onUserInput])
 
