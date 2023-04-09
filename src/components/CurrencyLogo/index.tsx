@@ -33,7 +33,7 @@ const LogoTypesSpecified: LogoTypesSpecifiedInterface= {
 }
 
 const LogoExternalLink: LogoTypesSpecifiedInterface = {
-  "0x23c84bed51216245786f5f61bc92a3f0ec1ecf89": "https://www.filedoge.io/assets/coin/0x23c84bed51216245786f5f61bc92a3f0ec1ecf89.png",
+  // "0x23c84bed51216245786f5f61bc92a3f0ec1ecf89": "https://www.filedoge.io/assets/coin/0x23c84bed51216245786f5f61bc92a3f0ec1ecf89.png",
   "0xa74a49619e7494638a4c74891d65aeb0af5defcf": "https://www.filedoge.io/assets/coin/0xa74a49619e7494638a4c74891d65aeb0af5defcf.png",
   "0x2646bb363851d31dca3de045e0eb63d0afeb427d": "https://www.filedoge.io/assets/coin/0x2646bb363851d31dca3de045e0eb63d0afeb427d.png"
 }

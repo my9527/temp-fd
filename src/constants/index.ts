@@ -24,7 +24,7 @@ export const FLD = new Token(ChainId.FILE, '0x7b90337f65faa2b2b8ed583ba1ba6eb0c9
 export const FILDAO = new Token(ChainId.FILE, '0xa74a49619E7494638a4C74891d65AEB0AF5dEfcf', 18, 'FILDAO', 'FILDAO')
 export const FSB = new Token(ChainId.FILE, '0x23C84BED51216245786f5F61Bc92a3F0eC1Ecf89', 18, 'FSB', 'FileShib Token')
 // base 中显示的
-export const CommonBaseTokens = [FILEDOGE, FLD, FILDAO, FSB];
+export const CommonBaseTokens = [FILEDOGE, FLD, FILDAO];
 
 
 export const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
