@@ -10,7 +10,7 @@ import { AutoRow } from '../Row'
 import CurrencyLogo from '../CurrencyLogo'
 import { FILEDOGE, FILEDOGEH } from '../../constants'
 import { useActiveWeb3React } from '../../hooks'
-import { Plus } from 'react-feather'
+// import { Plus } from 'react-feather'
 
 const BaseWrapper = styled.div<{ disable?: boolean }>`
   border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.bg3)};
@@ -70,7 +70,7 @@ export default function CommonBases({
             address: targetCoin.address, // The address that the token is at.
             symbol: targetCoin.symbol, // A ticker symbol or shorthand, up to 5 chars.
             decimals: targetCoin.decimals, // The number of decimals in the token
-            image: `/images/logos/${targetCoin.address}/logo.svg`, // A string url of the token logo
+            image: 'https://www.filedoge.io/assets/logo.svg', // A string url of the token logo
           },
         },
       });
@@ -89,7 +89,7 @@ export default function CommonBases({
           </Text>
           <QuestionHelper text="These tokens are commonly paired with other tokens." />
         </FlexRow>
-        <AddSpan onClick={addToMetaMask}><Plus size={14}/>Add FILEDOGE</AddSpan>
+        <AddSpan onClick={addToMetaMask}>Add FILEDOGE To MetaMask</AddSpan>
       </FlexRow>
       <AutoRow gap="4px">
         <BaseWrapper

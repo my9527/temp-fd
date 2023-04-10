@@ -33,6 +33,7 @@ export function useSwapActionHandlers(): {
   const dispatch = useDispatch<AppDispatch>()
   const onCurrencySelection = useCallback(
     (field: Field, currency: Currency) => {
+      console.log("field ==>", field, currency)
       dispatch(
         selectCurrency({
           field,
@@ -129,7 +130,6 @@ export function useDerivedSwapInfo(): {
     recipient
   } = useSwapState()
 
-  console.log("inputCurrencyId ==>", outputCurrencyId)
 
   const inputCurrency = useCurrency(inputCurrencyId)
   const outputCurrency = useCurrency(outputCurrencyId)
@@ -159,7 +159,6 @@ export function useDerivedSwapInfo(): {
     [Field.OUTPUT]: outputCurrency ?? undefined
   }
 
-  console.log("useV1Trade", currencies)
 
   // get link to trade on v1, if a better rate exists
   const v1Trade = useV1Trade(isExactIn, currencies[Field.INPUT], currencies[Field.OUTPUT], parsedAmount)
@@ -220,6 +219,28 @@ export function useDerivedSwapInfo(): {
     v2Trade: v2Trade ?? undefined,
     inputError,
     v1Trade
+  }
+}
+
+// from the current swap inputs, compute the best trade and return it.
+export function useDerivedSwapInfoOnlyCurrency(): {
+  currencies: { [field in Field]?: Currency }
+} {
+  const {
+    [Field.INPUT]: { currencyId: inputCurrencyId },
+    [Field.OUTPUT]: { currencyId: outputCurrencyId },
+  } = useSwapState()
+
+
+  const inputCurrency = useCurrency(inputCurrencyId)
+  const outputCurrency = useCurrency(outputCurrencyId)  
+
+  const currencies: { [field in Field]?: Currency } = {
+    [Field.INPUT]: inputCurrency ?? undefined,
+    [Field.OUTPUT]: outputCurrency ?? undefined
+  }
+  return {
+    currencies,
   }
 }
 

@@ -16,8 +16,16 @@ export const USDT = new Token(ChainId.MAINNET, '0xdAC17F958D2ee523a2206206994597
 export const COMP = new Token(ChainId.MAINNET, '0xc00e94Cb662C3520282E6f5717214004A7f26888', 18, 'COMP', 'Compound')
 export const MKR = new Token(ChainId.MAINNET, '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2', 18, 'MKR', 'Maker')
 export const AMPL = new Token(ChainId.MAINNET, '0xD46bA6D942050d489DBd938a2C909A5d5039A161', 9, 'AMPL', 'Ampleforth')
+
 export const FILEDOGE = new Token(ChainId.FILE, '0x2646BB363851d31DcA3DE045e0eB63d0aFeB427D', 18, 'FILEDOGE', 'File Doge')
 export const FILEDOGEH = new Token(ChainId.FILEH, '0xCE3DF008810e8d41aB3275f6EcEa1989b07a2f57', 18, 'FILEDOGE', 'Testnet File Doge')
+export const FLD = new Token(ChainId.FILE, '0x7b90337f65faa2b2b8ed583ba1ba6eb0c9d7ea44', 18, 'FLD', 'filadoge')
+
+export const FILDAO = new Token(ChainId.FILE, '0xa74a49619E7494638a4C74891d65AEB0AF5dEfcf', 18, 'FILDAO', 'FILDAO')
+export const FSB = new Token(ChainId.FILE, '0x23C84BED51216245786f5F61Bc92a3F0eC1Ecf89', 18, 'FSB', 'FileShib Token')
+// base 中显示的
+export const CommonBaseTokens = [FILEDOGE, FLD, FILDAO];
+
 
 export const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
   [ChainId.MAINNET]: null,
@@ -45,7 +53,7 @@ const WETH_ONLY: ChainTokenList = {
   [ChainId.RINKEBY]: [WETH[ChainId.RINKEBY]],
   [ChainId.GÖRLI]: [WETH[ChainId.GÖRLI]],
   [ChainId.KOVAN]: [WETH[ChainId.KOVAN]],
-  [ChainId.FILE]: [WETH[ChainId.FILE], FILEDOGE],
+  [ChainId.FILE]: [...CommonBaseTokens],
   [ChainId.FILEH]: [WETH[ChainId.FILEH], FILEDOGEH],
 }
 

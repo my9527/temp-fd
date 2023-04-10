@@ -26,3 +26,4 @@ export const addSerializedPair = createAction<{ serializedPair: SerializedPair }
 export const removeSerializedPair = createAction<{ chainId: number; tokenAAddress: string; tokenBAddress: string }>(
   'user/removeSerializedPair'
 )
+export const addSerializedTokens = createAction<{ serializedTokens: [SerializedToken] }>('user/addSerializedTokens')

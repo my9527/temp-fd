@@ -15,7 +15,7 @@ import CurrencyLogo from '../CurrencyLogo'
 import { MouseoverTooltip } from '../Tooltip'
 import { FadedSpan, MenuItem } from './styleds'
 import Loader from '../Loader'
-import { isTokenOnList } from '../../utils'
+import { isTokenOnBase, isTokenOnList } from '../../utils'
 
 function currencyKey(currency: Currency): string {
   return currency instanceof Token ? currency.address : currency === ETHER ? 'ETHER' : ''
@@ -97,6 +97,7 @@ function CurrencyRow({
   const key = currencyKey(currency)
   const selectedTokenList = useSelectedTokenList()
   const isOnSelectedList = isTokenOnList(selectedTokenList, currency)
+  const isOnBaseToken = isTokenOnBase(currency)
   const customAdded = useIsUserAddedToken(currency)
   const balance = useCurrencyBalance(account ?? undefined, currency)
 
@@ -118,7 +119,7 @@ function CurrencyRow({
           {currency.symbol}
         </Text>
         <FadedSpan>
-          {!isOnSelectedList && customAdded ? (
+          {!isOnBaseToken && !isOnSelectedList && customAdded ? (
             <TYPE.main fontWeight={500}>
               Added by user
               <LinkStyledButton
@@ -131,7 +132,7 @@ function CurrencyRow({
               </LinkStyledButton>
             </TYPE.main>
           ) : null}
-          {!isOnSelectedList && !customAdded ? (
+          {!isOnBaseToken && !isOnSelectedList && !customAdded ? (
             <TYPE.main fontWeight={500}>
               Found by address
               <LinkStyledButton

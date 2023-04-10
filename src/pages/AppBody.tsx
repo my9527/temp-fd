@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useAddUserToken } from '../state/user/hooks'
-import { FILEDOGEH } from '../constants'
+import { CommonBaseTokens } from '../constants'
+
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../state'
+import { selectList } from '../state/lists/actions'
 
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../state'
@@ -29,7 +33,14 @@ export default function AppBody({ children }: { children: React.ReactNode }) {
 
   // 配置默认token， 配置list
   useEffect(() => {
-    addToken(FILEDOGEH);
+    // addToken(FILEDOGEH);
+    // addToken(FILEDOGE);
+    // addToken(FLD);
+    // addToken(FILDAO);
+    CommonBaseTokens.forEach(tk => {
+      addToken(tk);
+    })
+    // addToken(FSB);
     dispatch(selectList(`${window.location.origin}/tokens/list.json`));
   }, []);
 

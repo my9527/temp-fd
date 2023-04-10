@@ -8,12 +8,14 @@ import { isAddress } from '../utils'
 
 import { useActiveWeb3React } from './index'
 import { useBytes32TokenContract, useTokenContract } from './useContract'
+// import { CommonBaseTokens } from '../constants'
 
 export function useAllTokens(): { [address: string]: Token } {
   const { chainId } = useActiveWeb3React()
   const userAddedTokens = useUserAddedTokens()
   const allTokens = useSelectedTokenList()
 
+  // console.log("userAddedTokens", userAddedTokens,allTokens )
   return useMemo(() => {
     if (!chainId) return {}
     return (
@@ -47,6 +49,13 @@ function parseStringOrBytes32(str: string | undefined, bytes32: string | undefin
     ? parseBytes32String(bytes32)
     : defaultValue
 }
+
+// const useFileToken = (tokenAddress?: string): Token | undefined | null => {
+//   const [target] = CommonBaseTokens.filter(v => tokenAddress === v.address);
+//   return target;
+// }
+
+
 
 // undefined if invalid or does not exist
 // null if loading
