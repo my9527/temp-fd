@@ -87,7 +87,8 @@ export default function Modal({
   minHeight = false,
   maxHeight = 50,
   initialFocusRef,
-  children
+  children,
+  ...rest
 }: ModalProps) {
   const fadeTransition = useTransition(isOpen, null, {
     config: { duration: 200 },
@@ -125,6 +126,7 @@ export default function Modal({
                 minHeight={minHeight}
                 maxHeight={maxHeight}
                 mobile={isMobile}
+                {...rest}
               >
                 {/* prevents the automatic focusing of inputs on mobile by the reach dialog */}
                 {!initialFocusRef && isMobile ? <div tabIndex={1} /> : null}

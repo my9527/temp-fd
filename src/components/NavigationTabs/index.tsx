@@ -175,6 +175,9 @@ export function SwapPoolTabs({ active, position }: { active: 'swap' | 'pool', po
       <StyledNavLink id={`pool-nav-link`} to={'/pool'} isActive={() => curPath === '/pool'}>
         {t('pool')}
       </StyledNavLink>
+      <StyledNavLink id={`farm-nav-link`} to={'/farm'} isActive={() => curPath === '/farm'}>
+        {t('farm')}
+      </StyledNavLink>
       <StyledNavLink onClick={showMessge}  aria-disabled id={`nft-nav-link`} to={'/nft'} isActive={() => curPath === '/nft'}>
         NFTs
       </StyledNavLink>
