@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Modal, ModalContent, Header, Title, CloseIcon, DesArea,
   Logo, Des, StakeLabel, StakeInput, InputInner, AddonAfter,
   BalanceArea, BalanceLabel, BalanceTotal, Total, TotalAmount, TotalUnit,
@@ -6,10 +6,12 @@ import { Modal, ModalContent, Header, Title, CloseIcon, DesArea,
   ApproveAmountArea, ApproveLabel, ApprovedAmountLine, ApprovedAmount, ApproveNeedAmount,
   ApproveButton
 } from './styledComps';
-import CloseImg from './close-icon.svg';
-import LogoSvg from './logo.svg';
-import DesBg from './des-bg.svg';
-import AddonIcon from '../addon-icon.svg';
+import CloseImg from '../assets/close-icon.svg';
+import LogoSvg from '../assets/logo.svg';
+import DesBg from '../assets/des-bg.svg';
+import AddonIcon from '../assets/addon-icon.svg';
+import { useLPTokenContract, useFarmContract } from '../../../../hooks/useContract';
+import { FARM_ADDRESS } from '../../../../constants';
 
 interface ModalProps {
   isOpen: boolean
@@ -21,6 +23,20 @@ interface ModalProps {
 }
 
 export default function Stake({ isOpen, onDismiss }: ModalProps) {
+  const lpContract = useLPTokenContract();
+  const farmContract = useFarmContract();
+
+  // useEffect(() => {
+  //   async function main() {
+  //     const data = await lpContract?.approve(FARM_ADDRESS, 100);
+  //   }
+  //   main();
+  // }, []);
+
+  const stake = useCallback(async () => {
+    const data = await farmContract?.stake(0, (20 * 1e18).toString());
+  }, []);
+
   return (
     <Modal isOpen={isOpen} onDismiss={onDismiss}>
       <ModalContent>
@@ -62,7 +78,7 @@ export default function Stake({ isOpen, onDismiss }: ModalProps) {
           </ApproveAmountArea>
           <ApproveButton>Approve</ApproveButton>
         </WalletApprove>
-        <StakeButton>Stake</StakeButton>
+        <StakeButton onClick={stake}>Stake</StakeButton>
         <AddonWrapper>
           <Addon>
             ADD FILEDOGE-FILE LP

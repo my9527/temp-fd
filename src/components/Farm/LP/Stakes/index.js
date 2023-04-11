@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { StakesWrapper, StakeItem, StakeAmount, ItemLabel, ItemAmount,
   ItemUnit, Addons, Addon, HarvestButton
 } from './styledComps';
+import { useFarmContract } from '../../../../hooks/useContract';
+import { useActiveWeb3React } from '../../../../hooks';
 
-export default function Stakes() {
+export default function Stakes({ lpTokens, pairToken }) {
+  const farmContract = useFarmContract();
+  const [pendingCakes, setPendingCakes] = useState('');
+  const { account } = useActiveWeb3React();
+
+  useEffect(() => {
+    async function main() {
+      const data = await farmContract.pendingFileDoge(0, account);
+      setPendingCakes(data.toString());
+    }
+    main();
+  }, []);
+
+  const harvest = useCallback(() => {
+
+  }, []);
+  
+
   return (
     <StakesWrapper>
       <StakeItem>
         <StakeAmount>
           <ItemLabel>STAKED</ItemLabel>
-          <ItemAmount>123.45</ItemAmount>
+          <ItemAmount>{lpTokens?.toSignificant(6)}</ItemAmount>
           <ItemUnit>≈ $ 100</ItemUnit>
         </StakeAmount>
         <Addons>
@@ -20,10 +39,10 @@ export default function Stakes() {
       <StakeItem>
         <StakeAmount>
           <ItemLabel>FILEDOGE Earned</ItemLabel>
-          <ItemAmount>0.00000</ItemAmount>
+          <ItemAmount>{pendingCakes}</ItemAmount>
           <ItemUnit>≈ $ 0.00</ItemUnit>
         </StakeAmount>
-        <HarvestButton>Harvest</HarvestButton>
+        <HarvestButton onClick={harvest}>Harvest</HarvestButton>
       </StakeItem>
     </StakesWrapper>
   );

@@ -2,13 +2,18 @@ import React from "react";
 import { Wrapper, Header, Logo, Items, Item, ItemTitle, ItemValue,
   TipImg, APRValue, Staking, Addons, Addon, AddonImg, Bg } from './styledComps';
 import CommingSoon from '../CommingSoon';
-import LPLogo from './lp-logo.svg';
-import TipIcon from './tip-icon.svg';
-import AddonIcon from './addon-icon.svg';
-import LPBg from './bg.png';
+import LPLogo from './assets/lp-logo.svg';
+import TipIcon from './assets/tip-icon.svg';
+import AddonIcon from './assets/addon-icon.svg';
+import LPBg from './assets/bg.png';
 import AddLiquidity from './AddLiquidity';
+import { useToken } from '../../../hooks/Tokens';
+import { useTotalSupply } from "../../../data/TotalSupply";
 
 export default function LP() {
+  const pairToken = useToken('0x2d34b45378DccC5683774Fc18F7569e34ADB4699');
+  const totalSupply = useTotalSupply(pairToken);
+
   return (
     <React.Fragment>
       <Wrapper>
@@ -25,9 +30,9 @@ export default function LP() {
             </Item>
             <Item>
               <ItemTitle>Liquidity</ItemTitle>
-              <ItemValue>$ 313413</ItemValue>
+              <ItemValue>{totalSupply?.toSignificant(6) || '-'}</ItemValue>
             </Item>
-            <Item>
+            <Item> 
               <ItemTitle>Multiplier</ItemTitle>
               <ItemValue>
                 112x
@@ -47,7 +52,7 @@ export default function LP() {
               <AddonImg src={AddonIcon} />
             </Addon>
           </Addons>
-          <AddLiquidity />
+          <AddLiquidity pairToken={pairToken} />
         </Staking>
         <CommingSoon />
         <Bg src={LPBg} />
