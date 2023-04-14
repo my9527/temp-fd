@@ -8,6 +8,10 @@ const CommingSoon = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    flex: auto;
+    height: 183px;
+  `};
 `;
 
 const CommingIcon = styled.img`

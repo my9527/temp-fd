@@ -100,6 +100,9 @@ const Web3StatusConnected = styled(Web3StatusGeneric) <{ pending?: boolean }>`
       border: 1px solid ${({ pending, theme }) => (pending ? darken(0.1, theme.primary1) : darken(0.1, theme.bg3))};
     }
   }
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    height: 32px;
+  `};
 `
 
 const Text = styled.p`

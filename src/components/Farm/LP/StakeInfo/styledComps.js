@@ -3,6 +3,9 @@ import styled from 'styled-components';
 export const StakesWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    flex-direction: column;
+  `};
 `;
 
 export const StakeItem = styled.div`
@@ -19,6 +22,12 @@ export const StakeItem = styled.div`
   &:last-of-type {
     margin-left: 24px;
   }
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin-bottom: 12px;
+    &:last-of-type {
+      margin-left: 0;
+    }
+  `};
 `;
 
 export const StakeAmount = styled.div``;

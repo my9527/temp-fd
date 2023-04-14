@@ -26,17 +26,20 @@ import { SwapPoolTabs } from '../NavigationTabs'
 
 const HeaderFrame = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  height: 80px;
   top: 0;
   position: absolute;
   z-index: 2;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    padding: 12px 0 0 0;
     width: calc(100%);
     position: relative;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    height: 60px;
   `};
 `
 
@@ -62,10 +65,6 @@ const HeaderElement = styled.div`
 const HeaderElementWrap = styled.div`
   display: flex;
   align-items: center;
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    margin-top: 0.5rem;
-`};
 `
 
 const Title = styled.a`
@@ -148,18 +147,13 @@ const HeaderControls = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    flex-direction: column;
-    align-items: flex-end;
-  `};
 `
 
 const LeftControls = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
 `
 
 // const LItem = styled.div`
@@ -204,7 +198,7 @@ export default function Header(props: any) {
 
   return (
     <HeaderFrame>
-      <RowBetween style={{ alignItems: 'flex-start' }} padding="1rem 1rem 0 1rem">
+      <RowBetween style={{ alignItems: 'flex-start', maxWidth: '1200px', width: '100%' }}>
         <HeaderElement style={{ width: "30%" }}>
           <Title href="https://www.filedoge.io">
             <UniIcon>
