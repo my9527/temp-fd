@@ -7,10 +7,6 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../state'
 import { selectList } from '../state/lists/actions'
 
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../state'
-import { selectList } from '../state/lists/actions'
-
 export const BodyWrapper = styled.div`
   position: relative;
   max-width: 420px;

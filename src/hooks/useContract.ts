@@ -13,6 +13,8 @@ import { MULTICALL_ABI, MULTICALL_NETWORKS } from '../constants/multicall'
 import { V1_EXCHANGE_ABI, V1_FACTORY_ABI, V1_FACTORY_ADDRESSES } from '../constants/v1'
 import { getContract } from '../utils'
 import { useActiveWeb3React } from './index'
+import { FARM_CONFIG } from '../components/Farm/LP/constant' 
+import { FARM_ABI } from '../constants/abis/farm'
 
 // returns null on errors
 function useContract(address: string | undefined, ABI: any, withSignerIfPossible = true): Contract | null {
@@ -91,4 +93,10 @@ export function useSocksController(): Contract | null {
     UNISOCKS_ABI,
     false
   )
+}
+
+export function useFarmContract( withSignerIfPossible = false ): Contract | null {
+  const { chainId } = useActiveWeb3React()
+  const _chainId = chainId === ChainId.FILE ? ChainId.FILE : ChainId.FILEH;
+  return useContract(FARM_CONFIG[_chainId].farmAddress, FARM_ABI, withSignerIfPossible)
 }

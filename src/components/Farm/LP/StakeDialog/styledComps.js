@@ -1,6 +1,8 @@
 import CusModal from '../../../Modal';
 import styled from 'styled-components';
 
+import { Input as NumericalInput} from "../../../NumericalInput"
+
 export const Modal = styled(CusModal)`
   max-width: 450px !important;
   max-height: unset !important;
@@ -70,7 +72,7 @@ export const StakeInput = styled.div`
   border-radius: 8px; 
 `;
 
-export const InputInner = styled.input`
+export const InputInner = styled(NumericalInput)`
   text-indent: 16px;
   flex: 1;
   height: 100%;
@@ -206,6 +208,10 @@ export const StakeButton = styled.button`
   outline: none;
   &:hover {
     opacity: 0.8;
+  }
+  &[disabled]{
+    background: rgb(237, 238, 242);
+    color: rgb(136, 141, 155);
   }
 `;
 
