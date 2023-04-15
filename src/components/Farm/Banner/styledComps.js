@@ -6,6 +6,9 @@ export const Title = styled.h1`
   color: #FFAD06;
   font-weight: 500;
   margin: 0;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    font-size: 20px;
+  `};
 `;
 
 export const Slogan = styled.h2`
@@ -14,6 +17,9 @@ export const Slogan = styled.h2`
   line-height: 150%;
   color: #000;
   margin: 0;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    font-size: 24px;
+  `};
 `;
 
 export const Des = styled.p`

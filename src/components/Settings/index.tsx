@@ -65,6 +65,10 @@ const StyledMenuButton = styled.button`
   svg {
     margin-top: 2px;
   }
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    height: 32px;
+  `};
 `
 const EmojiWrapper = styled.div`
   position: absolute;

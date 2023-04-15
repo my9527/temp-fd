@@ -29,6 +29,9 @@ const AppWrapper = styled.div`
   flex-flow: column;
   align-items: flex-start;
   overflow-x: hidden;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 0 16px;
+  `};
 `
 
 const HeaderWrapper = styled.div`
@@ -49,7 +52,7 @@ const BodyWrapper = styled.div`
   z-index: 10;
 
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      padding: 5rem 16px 16px 16px;
+      padding: 120px 0 16px 0;
   `};
 
   z-index: 1;

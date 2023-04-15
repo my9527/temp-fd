@@ -11,6 +11,9 @@ export const Wrapper = styled.div`
   border-radius: 20px;
   border: 2px solid #000;
   background: #fff;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    margin-top: 100px;
+  `};
 `;
 
 export const Bg = styled.img`
@@ -19,6 +22,12 @@ export const Bg = styled.img`
   right: 0;
   width: 438px;
   z-index: -1;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    width: 196px;
+    right: auto;
+    left: 0px;
+    top: -80px;
+  `};
 `;
 
 export const Header = styled.div`
@@ -27,6 +36,12 @@ export const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 32px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    height: unset;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 16px 12px 16px;
+  `};
 `;
 
 export const Logo = styled.img`
@@ -38,11 +53,18 @@ export const Items = styled.div`
   justify-content: space-between;
   max-width: 625px;
   width: 100%;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    flex-wrap: wrap;
+    margin-top: 12px;
+  `};
 `;
 
 export const Item = styled.div`
   display: flex;
   flex-direction: column;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 50%;
+  `};
 `;
 
 export const ItemTitle = styled.div`
@@ -76,7 +98,14 @@ export const Staking = styled.div`
   justify-content: space-between;
   padding: 0 32px;
   height: 158px;
-  background: #F8F9FB;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    height: unset;
+    padding: 0;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    padding: 16px;
+    background: #F8F9FB;
+  `};
 `;
 
 export const Addons = styled.div`
@@ -100,6 +129,11 @@ export const Addon = styled.a`
   &:last-of-type {
     margin-top: 20px;
   }
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    &:last-of-type {
+      margin-top: 8px;
+    }
+  `};
 `;
 
 export const AddonImg = styled.img`
@@ -142,5 +176,8 @@ export const FarmingButton = styled.button`
   &:hover {
     opacity: 0.8;
   }
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin-bottom: 12px;
+  `};
 `;
 
