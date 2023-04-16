@@ -123,6 +123,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
   )
 }
 
+
 export default function FullPositionCard({ pair, border }: PositionCardProps) {
   const { account } = useActiveWeb3React()
 

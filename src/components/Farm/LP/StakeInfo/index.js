@@ -5,10 +5,10 @@ import {
 } from './styledComps';
 import { useFarmContract } from "../../../../hooks/useContract";
 import { useSingleCallResult } from "../../../../state/multicall/hooks";
-import { useToSignificant } from "../constant";
+import { useToSignificant, useUSD } from "../constant";
 import { useTransactionAdder } from "../../../../state/transactions/hooks"; 
 
-export default function StakeInfo({ staked, openStakeModal, account, pid }) {
+export default function StakeInfo({ staked, openStakeModal, account, pid, lpPrice, fileDogePrice }) {
 
   const farmContract = useFarmContract(true);
   const addTransaction = useTransactionAdder();
@@ -21,21 +21,24 @@ export default function StakeInfo({ staked, openStakeModal, account, pid }) {
 
   const harvest = useCallback(() => {
     async function _init(){
+      console.log('harvest')
+      if(!+pendingRd)return;
        farmContract.unstake(pid, 0)
        .then(reponse => {
           addTransaction(reponse);
        });
     }
     _init();
-  }, []);
+  }, [pendingRd]);
 
   return (
     <StakesWrapper>
       <StakeItem>
         <StakeAmount>
           <ItemLabel>STAKED</ItemLabel>
-          <ItemAmount>{staked?.stakeAmount || '-'}</ItemAmount>
-          <ItemUnit>≈ $ 100</ItemUnit>
+          <ItemAmount>{useToSignificant(staked?.stakeAmount) || '-'}</ItemAmount>
+          {/* <ItemUnit>≈ $ {new Number(lpPrice * (useToSignificant(staked?.stakeAmount) || '0')).toFixed(2)}</ItemUnit> */}
+          <ItemUnit>≈ $ {useUSD(lpPrice, useToSignificant(staked?.stakeAmount) || '0')}</ItemUnit>
         </StakeAmount>
         <Addons>
           <Addon onClick={() => openStakeModal("less")}>-</Addon>
@@ -46,7 +49,8 @@ export default function StakeInfo({ staked, openStakeModal, account, pid }) {
         <StakeAmount>
           <ItemLabel>FILEDOGE Earned</ItemLabel>
           <ItemAmount>{pendingRd}</ItemAmount>
-          <ItemUnit>≈ $ 0.00</ItemUnit>
+          {/* <ItemUnit>≈ $ {new Number((pendingRd || '0') * (fileDogePrice?.toSignificant(6) || '0')).toFixed(2)}</ItemUnit> */}
+          <ItemUnit>≈ $ {useUSD(fileDogePrice?.toSignificant(6) || '0', pendingRd)}</ItemUnit>
         </StakeAmount>
         <HarvestButton onClick={harvest}>Harvest</HarvestButton>
       </StakeItem>

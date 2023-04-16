@@ -4,21 +4,23 @@ import { useWalletModalToggle } from '../../../state/application/hooks';
 import { useActiveWeb3React } from '../../../hooks';
 import StakeDialog from './StakeDialog';
 import StakeInfo from './StakeInfo';
-import { Pair, TokenAmount } from 'my-uniswap-sdk';
+import { Pair, TokenAmount, Fraction } from 'my-uniswap-sdk';
 import { useTokenBalance } from '../../../state/wallet/hooks';
-
+import { Link as HistoryLink } from 'react-router-dom'
 
 type FarmingProp = {
   lp: Pair | null
   stakeInfo: {
-    rewardDebt: string,
+    rewardDebt: string | undefined,
     stakeAmount: string,
   }
   allowance?: TokenAmount,
   pid: number | string
+  fileDogePrice: Fraction | string | undefined | null
+  lpPrice: Fraction | number | string | undefined | null
 }
 
-export default function Farmings({ lp, stakeInfo, pid }: FarmingProp) {
+export default function Farmings({ lp, stakeInfo, pid, lpPrice, fileDogePrice }: FarmingProp) {
   const [openStake, setOpenStake] = useState("");
   const toggleWalletModal = useWalletModalToggle();
   const { account } = useActiveWeb3React();
@@ -46,6 +48,8 @@ export default function Farmings({ lp, stakeInfo, pid }: FarmingProp) {
             <StakeInfo
               account={account}
               pid={pid}
+              lpPrice={lpPrice}
+              fileDogePrice={fileDogePrice}
               // lpToken={lp?.liquidityToken}
               staked={stakeInfo}
               openStakeModal={showStakeModal}
@@ -57,7 +61,10 @@ export default function Farmings({ lp, stakeInfo, pid }: FarmingProp) {
               staked={stakeInfo?.stakeAmount}
               isOpen={!!openStake}
               type={openStake}
+              lpPrice={lpPrice}
+              fileDogePrice={fileDogePrice}
               onDismiss={() => setOpenStake("")}
+              lp={lp}
             />
           </>
           : (
@@ -75,9 +82,11 @@ export default function Farmings({ lp, stakeInfo, pid }: FarmingProp) {
                     </FarmingButton>
                   )
                   : (
-                    <FarmingButton>
-                      Add Liquidity
-                    </FarmingButton>
+                    <HistoryLink to="/pool">
+                      <FarmingButton>
+                        Add Liquidity
+                      </FarmingButton>
+                    </HistoryLink>
                   )
               }
             </React.Fragment>

@@ -1,8 +1,10 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { Modal, ModalContent, Header, Title, CloseIcon, DesArea,
+import { 
+  Modal, ModalContent, Header, Title, CloseIcon, DesArea,
   Logo, Des, StakeLabel, StakeInput, InputInner, AddonAfter,
   BalanceArea, BalanceLabel, BalanceTotal, Total, TotalAmount, TotalUnit,
-  Amounts, Amount, StakeButton, AddonWrapper, Addon, AddonImg
+  // Amounts, Amount, 
+  StakeButton, AddonWrapper, Addon, AddonImg
 } from './styledComps';
 import CloseImg from './close-icon.svg';
 import LogoSvg from './logo.svg';
@@ -10,12 +12,13 @@ import DesBg from './des-bg.svg';
 import AddonIcon from '../../assets/addon-icon.svg';
 import { useFarmContract } from '../../../../hooks/useContract';
 import { useTransactionAdder } from '../../../../state/transactions/hooks';
-import { Token, TokenAmount } from 'my-uniswap-sdk';
+import { Fraction, Token, TokenAmount, Pair } from 'my-uniswap-sdk';
 import { utils } from 'ethers';
 import { useTokenAllowance } from '../../../../data/Allowances';
 import { toCurrencyAmount } from '../constant';
-import { parseEther } from '@ethersproject/units';
+import { parseEther, formatEther } from '@ethersproject/units';
 import { useApproveCallback, ApprovalState } from '../../../../hooks/useApproveCallback';
+import { Link as HistoryLink } from 'react-router-dom';
 
 
 
@@ -38,20 +41,30 @@ interface ModalProps {
   lpToken: Token | undefined;
   account?: null | string; 
   pid: number |string
+  lpPrice: Fraction | number | string | undefined | null
+  fileDogePrice: Fraction | string | undefined | null
+  lp: Pair | null
 }
 
-export default function StakeDialog({ pid, isOpen, onDismiss, type, staked, lpBalance, lpToken, account }: ModalProps) {
+export default function StakeDialog({ pid, isOpen, onDismiss, type, staked, lpBalance, lpToken, account, lpPrice, lp }: ModalProps) {
 
   const farmContract = useFarmContract(true);
   const addTransaction = useTransactionAdder();
   const [ inputAmount, setInputAmount ] = useState('')
+
+  const isStake = type === StakeType.MORE;
 
   const allowance = useTokenAllowance(lpToken, account??undefined, farmContract?.address);
 
   const [approvalLp, approveACallback] = useApproveCallback( 
     new TokenAmount(lpToken as any as Token, 
     parseEther(inputAmount || '0').toString()) , 
-    farmContract?.address)
+    farmContract?.address);
+
+  const closeModal = useCallback(() => {
+    setInputAmount("");
+    onDismiss();
+  }, []);
   
   const handleClick = useCallback(() => {
     async function _init() {
@@ -63,15 +76,16 @@ export default function StakeDialog({ pid, isOpen, onDismiss, type, staked, lpBa
       // console.log('parsedAmount', utils.parseEther(parsedAmount?.toExact() || '0'));
       farmContract[methodName](pid, utils.parseEther(inputAmount || '0').toString()).then((response:any) => {
         addTransaction(response);
-        onDismiss();
+        closeModal();
       });
     }
     _init()
   }, [type, inputAmount]);
 
   const setMax = useCallback(() => {
-    setInputAmount(type === StakeType.LESS ? staked : (lpBalance?.toExact() || ''));
-  }, [type, lpBalance]);
+    // console.log('lpBalance?.toExact()', staked, lpBalance?.toExact());
+    setInputAmount(type === StakeType.LESS ? utils.formatEther(staked) : (lpBalance?.toExact() || ''));
+  }, [type, lpBalance, staked]);
 
   const UsrButton = useMemo(() => {
 
@@ -81,6 +95,9 @@ export default function StakeDialog({ pid, isOpen, onDismiss, type, staked, lpBa
 
     if(!inputAmount) {
       return <StakeButton disabled>Enter an amount</StakeButton>
+    }
+    if(+inputAmount === 0) {
+      return <StakeButton disabled>Insufficient amount</StakeButton>
     }
     //
     if(type === StakeType.LESS){
@@ -108,25 +125,25 @@ export default function StakeDialog({ pid, isOpen, onDismiss, type, staked, lpBa
   }, [allowance, lpBalance, lpToken, inputAmount, type, approvalLp, handleClick, approveACallback]);
   
 
-  const closeModal = useCallback(() => {
-    setInputAmount("");
-    onDismiss();
-  }, []);
+  
+
+  const balanceNum = isStake ? lpBalance?.toSignificant(2) : new Number(formatEther(staked)).toFixed(2);
 
   return (
     <Modal isOpen={isOpen} onDismiss={closeModal}>
       <ModalContent>
         <Header>
-          <Title>Stake FILEDOGE-FILE LP tokens</Title>
+          <Title>{ isStake ? 'Stake FILEDOGE-FILE LP tokens' : 'Unstake FILEDOGE-FILE LP tokens' }</Title>
           <CloseIcon src={CloseImg} onClick={onDismiss} />
         </Header> 
         <DesArea>
           <Logo src={LogoSvg} />
-          <Des style={{ backgroundImage: `url(${DesBg})` }}>
-            When you farm, you can not only earn the original rewards for adding liquidity, but also additional rewards for farming
+          <Des style={{ backgroundImage: `url(${DesBg})`, backgroundSize:'cover' }}>
+            {isStake ? 'When you farm, you can not only earn the original rewards for adding liquidity, but also additional rewards for farming':
+            'You may add or remove liquidity on the position detail page without unstake'}
           </Des>    
         </DesArea>
-        <StakeLabel>Want Stake</StakeLabel>
+        <StakeLabel>{isStake ? 'Want Stake' : 'Want Unstake'}</StakeLabel>
         <StakeInput>
           <InputInner onUserInput={setInputAmount} value={inputAmount} />
           <AddonAfter onClick={setMax}>MAX</AddonAfter>
@@ -135,13 +152,13 @@ export default function StakeDialog({ pid, isOpen, onDismiss, type, staked, lpBa
           <BalanceLabel>Balance</BalanceLabel>         
           <BalanceTotal>
             <Total>
-              <TotalAmount>{lpBalance?.toSignificant(6)}</TotalAmount>
-              <TotalUnit>≈ $ 0.24</TotalUnit>
+              <TotalAmount>{balanceNum}</TotalAmount>
+              <TotalUnit>≈ $ { new Number(+(lpPrice || 0) * +(balanceNum || 0)).toFixed(2) }</TotalUnit>
             </Total>
-            <Amounts>
+            {/* <Amounts>
               <Amount>3.07 FILEDOGE</Amount>
               <Amount>0.03 FILE</Amount>
-            </Amounts>
+            </Amounts> */}
           </BalanceTotal>
         </BalanceArea>
         {/* <WalletApprove>
@@ -157,10 +174,14 @@ export default function StakeDialog({ pid, isOpen, onDismiss, type, staked, lpBa
         {/* <StakeButton onClick={handleClick}>{ type === StakeType.LESS ? 'unstake' : 'stake'}</StakeButton> */}
         {UsrButton}
         <AddonWrapper>
-          <Addon>
+          {isStake ? 
+          <HistoryLink to="/pool" style={{ textDecoration: 'none' }}>
+               <Addon>
             ADD FILEDOGE-FILE LP
             <AddonImg src={AddonIcon} />
           </Addon>
+          </HistoryLink>
+          : <span style={{ fontSize: '12px', color:"rgba(18,19,24,0.6)" }}>unstake will also automatically harvest any earnings that you haven't collected yet,and send them to you wallet</span>}
         </AddonWrapper>
       </ModalContent>
     </Modal>
