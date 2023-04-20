@@ -7,6 +7,7 @@ import StakeInfo from './StakeInfo';
 import { Pair, TokenAmount, Fraction } from 'my-uniswap-sdk';
 import { useTokenBalance } from '../../../state/wallet/hooks';
 import { Link as HistoryLink } from 'react-router-dom'
+import TransactionConfirmationModal from '../../TransactionConfirmationModal';
 
 type FarmingProp = {
   lp: Pair | null
@@ -20,11 +21,20 @@ type FarmingProp = {
   lpPrice: Fraction | number | string | undefined | null
 }
 
+type PendingTransaction = {
+  attemptingTxn: boolean
+  txhash: string | undefined
+}
+
 export default function Farmings({ lp, stakeInfo, pid, lpPrice, fileDogePrice }: FarmingProp) {
   const [openStake, setOpenStake] = useState("");
   const toggleWalletModal = useWalletModalToggle();
   const { account } = useActiveWeb3React();
   const [hasStake] = useState(false);
+  const [pendingTransaction, setPendingTransaction] = useState({
+    attemptingTxn: false,
+    txhash: "undefined",
+  } as PendingTransaction)
 
   // const [ stakedInfo, setStaked ] = useState({ amount: '0', rewardDebt: '0' });
   // const farmContract = useFarmContract();
@@ -65,6 +75,15 @@ export default function Farmings({ lp, stakeInfo, pid, lpPrice, fileDogePrice }:
               fileDogePrice={fileDogePrice}
               onDismiss={() => setOpenStake("")}
               lp={lp}
+              setPendingTransaction={(pending: PendingTransaction) => setPendingTransaction(pending)}
+            />
+            <TransactionConfirmationModal
+               isOpen={false}
+               onDismiss={() => setOpenStake("")}
+               attemptingTxn={pendingTransaction.attemptingTxn}
+               hash={pendingTransaction.txhash}
+               content={() => <div>confirmationContent</div>}
+               pendingText={"pendingText"}
             />
           </>
           : (

@@ -26,7 +26,7 @@ export const FARM_CONFIG = {
                 pair: [FILEDOGE, WETH[ChainId.FILE]]
             }    
         ] ,
-        farmAddress: "0x4f94D4A62DC619943f5cBC4D47382107660e2492" 
+        farmAddress: "0x7B7fACBEF91AF1E111892A74af185793A4CFbdEF" 
     },
     [ChainId.FILEH]: {
         lpsTokens: [
@@ -35,7 +35,7 @@ export const FARM_CONFIG = {
                 pair: [FILEDOGEH, WETH[ChainId.FILEH]]
             }    
         ] ,
-        farmAddress: "0x4f94D4A62DC619943f5cBC4D47382107660e2492" 
+        farmAddress: "0xaD7925777F97DE6A1B4662d14c18d0c6382b652A" 
     },
     [ChainId.MAINNET]: {
         lpsTokens: [],
@@ -61,6 +61,9 @@ export const toCurrencyAmount = (amount: BigintIsh) => {
 
 export const useLPPrice = (lp: Pair | null, lpTotal: TokenAmount | undefined, filPrice: number) => {
     return useMemo(() => {
+        if(!lpTotal) return 0;
+        // const _filPrice = Math.floor(filPrice * 100).toFixed(0)
+        // return lp?.reserve1.multiply('2').multiply(_filPrice).divide('100').divide(lpTotal?.toExact() || '1') || 0
         return (+(lp?.reserve1.toExact() || 0) * (+(filPrice || 0)) * 2) / +(lpTotal?.toExact() || 1)
     }, [lp, filPrice, lpTotal]);
 }
@@ -78,6 +81,5 @@ export const useFilPerToken = (token: Token | undefined, chainId: ChainId) => {
 
 
 export const useUSD = (unitPrice: string | number, amount: string | number) => {
-
-    return new Number(+(unitPrice || '0') * (+amount || 0)).toFixed(2);
+    return new Number((+unitPrice || 0) * (+amount || 0)).toFixed(2);
 }

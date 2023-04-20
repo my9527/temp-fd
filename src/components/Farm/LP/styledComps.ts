@@ -98,6 +98,7 @@ export const Staking = styled.div`
   justify-content: space-between;
   padding: 0 32px;
   height: 158px;
+  background: #f6f6f6;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     height: unset;
     padding: 0;
@@ -147,7 +148,7 @@ interface FarmingProps {
 }
 
 export const Farming = styled.div`
-  max-width: ${(props: FarmingProps) => props.hasStake ? 'unset' : ' 625px'};
+  max-width: ${(props: FarmingProps) => props.hasStake ? 'unset' : ' unset'};
   width: 100%;
 `;
 

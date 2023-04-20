@@ -10401,8 +10401,10 @@ mute-stream@0.0.8:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-"my-uniswap-sdk@file:.yalc/my-uniswap-sdk":
+my-uniswap-sdk@3.0.5:
   version "3.0.5"
+  resolved "https://registry.yarnpkg.com/my-uniswap-sdk/-/my-uniswap-sdk-3.0.5.tgz#b17757fe0e6e035edab24572a3ccf3531a73429e"
+  integrity sha512-n5F+6ds8+TNw3gTPeT0dhJBkVv3POc71B/QZnMRRRbsrpsD/GfwYQaiDLpMjLjqUfcnxDoQRTXGOjkbKdRGL6Q==
   dependencies:
     "@uniswap/v2-core" "^1.0.0"
     big.js "^5.2.2"

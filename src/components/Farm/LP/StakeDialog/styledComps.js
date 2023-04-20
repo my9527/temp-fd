@@ -213,7 +213,17 @@ export const StakeButton = styled.button`
     background: rgb(237, 238, 242);
     color: rgb(136, 141, 155);
   }
+  &[loading]
 `;
+
+export const IngSpan = styled.span`
+&::after{
+  animation: ellipsis 1.25s infinite;
+  content: '.';
+  width: 1em;
+  text-align: left;
+}
+`
 
 export const AddonWrapper = styled.div`
   margin-top: 12px;

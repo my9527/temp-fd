@@ -1,17 +1,18 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   StakesWrapper, StakeItem, StakeAmount, ItemLabel, ItemAmount,
   ItemUnit, Addons, Addon, HarvestButton
 } from './styledComps';
 import { useFarmContract } from "../../../../hooks/useContract";
 import { useSingleCallResult } from "../../../../state/multicall/hooks";
-import { useToSignificant, useUSD } from "../constant";
+import { useToSignificant, useUSD, toCurrencyAmount } from "../constant";
 import { useTransactionAdder } from "../../../../state/transactions/hooks"; 
 
 export default function StakeInfo({ staked, openStakeModal, account, pid, lpPrice, fileDogePrice }) {
 
   const farmContract = useFarmContract(true);
   const addTransaction = useTransactionAdder();
+  const [isHavestLoading, setHavestLoading] = useState(false);
   
 
   const { error, result} = useSingleCallResult(farmContract??undefined, "pendingFileDoge", [pid, account]);
@@ -23,10 +24,17 @@ export default function StakeInfo({ staked, openStakeModal, account, pid, lpPric
     async function _init(){
       console.log('harvest')
       if(!+pendingRd)return;
-       farmContract.unstake(pid, 0)
-       .then(reponse => {
-          addTransaction(reponse);
-       });
+      setHavestLoading(true)
+      try {
+        await farmContract.harvest(pid).then(addTransaction);
+        setHavestLoading(false)
+      //  .then(reponse => {
+      //     addTransaction(reponse);
+      //     setHavestLoading(false)
+      //  });
+      } catch(e) {
+        setHavestLoading(false)
+      }
     }
     _init();
   }, [pendingRd]);
@@ -35,8 +43,8 @@ export default function StakeInfo({ staked, openStakeModal, account, pid, lpPric
     <StakesWrapper>
       <StakeItem>
         <StakeAmount>
-          <ItemLabel>STAKED</ItemLabel>
-          <ItemAmount>{useToSignificant(staked?.stakeAmount) || '-'}</ItemAmount>
+          <ItemLabel>Staked</ItemLabel>
+          <ItemAmount>{toCurrencyAmount(staked?.stakeAmount).toFixed(2) || '-'}</ItemAmount>
           {/* <ItemUnit>≈ $ {new Number(lpPrice * (useToSignificant(staked?.stakeAmount) || '0')).toFixed(2)}</ItemUnit> */}
           <ItemUnit>≈ $ {useUSD(lpPrice, useToSignificant(staked?.stakeAmount) || '0')}</ItemUnit>
         </StakeAmount>
@@ -48,11 +56,11 @@ export default function StakeInfo({ staked, openStakeModal, account, pid, lpPric
       <StakeItem>
         <StakeAmount>
           <ItemLabel>FILEDOGE Earned</ItemLabel>
-          <ItemAmount>{pendingRd}</ItemAmount>
+          <ItemAmount>{toCurrencyAmount(pendingRewards || '0').toFixed(2)}</ItemAmount>
           {/* <ItemUnit>≈ $ {new Number((pendingRd || '0') * (fileDogePrice?.toSignificant(6) || '0')).toFixed(2)}</ItemUnit> */}
           <ItemUnit>≈ $ {useUSD(fileDogePrice?.toSignificant(6) || '0', pendingRd)}</ItemUnit>
         </StakeAmount>
-        <HarvestButton onClick={harvest}>Harvest</HarvestButton>
+        <HarvestButton disabled={isHavestLoading} onClick={harvest}>Harvest</HarvestButton>
       </StakeItem>
     </StakesWrapper>
   );

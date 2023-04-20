@@ -18,7 +18,7 @@ export const MKR = new Token(ChainId.MAINNET, '0x9f8F72aA9304c8B593d555F12eF6589
 export const AMPL = new Token(ChainId.MAINNET, '0xD46bA6D942050d489DBd938a2C909A5d5039A161', 9, 'AMPL', 'Ampleforth')
 
 export const FILEDOGE = new Token(ChainId.FILE, '0x2646BB363851d31DcA3DE045e0eB63d0aFeB427D', 18, 'FILEDOGE', 'File Doge')
-export const FILEDOGEH = new Token(ChainId.FILEH, '0x553b9EC4A1f5CE76485293aeE953B6f8DF2a4a3E', 18, 'FILEDOGETest', 'Testnet File Doge')
+export const FILEDOGEH = new Token(ChainId.FILEH, '0x2989412B42E997D987Ee5505509414695E7c9890', 18, 'FILEDOGETest', 'Testnet File Doge')
 export const FLD = new Token(ChainId.FILE, '0x7b90337f65faa2b2b8ed583ba1ba6eb0c9d7ea44', 18, 'FLD', 'filadoge')
 
 export const FILDAO = new Token(ChainId.FILE, '0xa74a49619E7494638a4C74891d65AEB0AF5dEfcf', 18, 'FILDAO', 'FILDAO')

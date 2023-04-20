@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const StakesWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  background: #f6f6f6;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     flex-direction: column;
   `};
@@ -71,6 +72,9 @@ export const Addon = styled.button`
   cursor: pointer;
   border: none;
   outline: none;
+  &[disabled] {
+    background: #ccc;
+  }
   &:hover {
     opacity: 0.8;
   }

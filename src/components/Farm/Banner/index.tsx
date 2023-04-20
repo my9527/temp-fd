@@ -11,18 +11,14 @@ export default function Banner() {
     <React.Fragment>
       <Title>Farms</Title>
       <Slogan>Stake LP tokens to earn.</Slogan>
-      <Des>Go to the community for discussion.</Des>
+      <Des>Go to the community for discussion</Des>
       <Actions>
+        <ExternalLink href='http://discord.gg/filedoge'>
+          <Action>Discord <ActionArrow src={ActionArrowSvg} /></Action>
+        </ExternalLink>
         <ExternalLink href='https://t.me/filedogetoken'>
-          <Action>International <ActionArrow src={ActionArrowSvg} /></Action>
+          <Action>Telegram <ActionArrow src={ActionArrowSvg} /></Action>
         </ExternalLink>
-        <ExternalLink href='https://t.me/filedoge_en'>
-          <Action>English <ActionArrow src={ActionArrowSvg} /></Action>
-        </ExternalLink>
-        <ExternalLink href='https://t.me/filedoge_cn'>
-          <Action>Chinese <ActionArrow src={ActionArrowSvg} /></Action>
-        </ExternalLink>
-
 
       </Actions>
     </React.Fragment>

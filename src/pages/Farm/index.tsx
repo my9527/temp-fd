@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Banner from '../../components/Farm/Banner';
 import LP from '../../components/Farm/LP';
-// import { SwapPoolTabsNew } from '../../components/NavigationTabs'
+import { SwapPoolTabs, SwapPoolTabsNew } from '../../components/NavigationTabs'
 import { PriceProvider } from '../../hooks/price';
+import { isMobile } from 'react-device-detect';
 
 // import { isMobile } from 'react-device-detect'
 const PageWrapper = styled.div`
@@ -18,8 +19,8 @@ export default function Farm() {
   return (
     <PriceProvider>
       <PageWrapper>
-        {/* <SwapPoolTabs position='form' active={'farm'} /> */}
-        {/* { isMobile &&  <SwapPoolTabsNew type={'farm'} /> } */}
+        { isMobile && <SwapPoolTabs position='form' active={'farm'} />}
+        { isMobile &&  <SwapPoolTabsNew type={'farm'} /> }
        
         <Banner />        
         <LP />
