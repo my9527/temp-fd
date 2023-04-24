@@ -96,8 +96,7 @@ export default function LpItem({ pair, pid, chainId }: LPProps) {
     // }
 
     // const _testr = new BigNumber("10")
-
-    const _apy = _arp.div(100).div(10).plus(1).exponentiatedBy(10);  
+    const _apy = _arp.div(100).div(50).plus(1).exponentiatedBy(50);
     return _apy.multipliedBy(100).plus(30).toFixed(2);
   // return fileDogePrice?.multiply(perBlock).multiply('2880').multiply('365').divide(_total || '1').divide(lpPrice?.toFixed(8) || '1').divide('10000')
   }, [totalStaked, fileDogePrice, lpPrice, filedogePerBlock]);
