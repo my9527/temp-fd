@@ -11,6 +11,19 @@ const NETWORK_URL = process.env.REACT_APP_NETWORK_URL
 const FORMATIC_KEY = process.env.REACT_APP_FORTMATIC_KEY
 const PORTIS_ID = process.env.REACT_APP_PORTIS_ID
 
+
+class BikeepConnector extends InjectedConnector {
+  getProvider(): Promise<any> {
+    /* eslint-disable-next-line */
+    const provider = (window?.bitkeep as any) && window?.bitkeep.ethereum; /* eslint-disable-line */
+    if (!provider) {
+      window.open('https://bitkeep.com/en/download?type=2');
+      throw "Please go to our official website to download!!"
+    }
+    return provider;
+  }
+}
+
 export const NETWORK_CHAIN_ID: number = parseInt(process.env.REACT_APP_CHAIN_ID ?? '1')
 
 if (typeof NETWORK_URL === 'undefined') {
@@ -29,6 +42,15 @@ export function getNetworkLibrary(): Web3Provider {
 export const injected = new InjectedConnector({
   // supportedChainIds: [1, 3, 4, 5, 42, 314, 3141]
   supportedChainIds: [314, 3141]
+})
+
+export const tokenPocket = new InjectedConnector({
+  // supportedChainIds: [1, 3, 4, 5, 42, 314, 3141]
+  supportedChainIds: [314]
+})
+
+export const bitkeep = new BikeepConnector({
+  supportedChainIds: [314]
 })
 
 // mainnet only

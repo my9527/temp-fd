@@ -118,7 +118,7 @@ export default function StakeDialog({
     const _input = toCurrencyAmount(parseEther((inputAmount || "0").toString()).toString());
 
     if(!inputAmount) {
-      return <StakeButton disabled> <Dots>asdasdf</Dots> Enter an amount</StakeButton>
+      return <StakeButton disabled>Enter an amount</StakeButton>
     }
     if(+inputAmount === 0) {
       return <StakeButton disabled>Insufficient amount</StakeButton>

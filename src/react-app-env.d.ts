@@ -12,7 +12,8 @@ interface Window {
     on?: (...args: any[]) => void
     removeListener?: (...args: any[]) => void
   }
-  web3?: {}
+  web3?: {},
+  bitkeep?: any;
 }
 
 declare module 'content-hash' {
