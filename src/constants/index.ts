@@ -34,6 +34,8 @@ export const FSB = new Token(ChainId.FILE, '0x23C84BED51216245786f5F61Bc92a3F0eC
 // base 中显示的
 export const CommonBaseTokens = [FILEDOGE, FLD, FILDAO];
 
+export const FILEDOGE_FIL = '0xb00A067d047148496556e98660d94E5a27CfD6AB';
+
 
 export const NETWORK_LABELS: { [chainId in ChainId]: string | null } = {
   [ChainId.MAINNET]: null,

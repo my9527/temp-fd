@@ -213,7 +213,6 @@ export const StakeButton = styled.button`
     background: rgb(237, 238, 242);
     color: rgb(136, 141, 155);
   }
-  &[loading]
 `;
 
 export const IngSpan = styled.span`

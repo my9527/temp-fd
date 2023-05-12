@@ -145,3 +145,246 @@ export const SwapShowAcceptChanges = styled(AutoColumn)`
   border-radius: 12px;
   margin-top: 8px;
 `
+export const SwapChartWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 678px;
+  width: 100%;
+  min-height: 420px;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  border-radius: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #FFFFFF;
+`;
+
+export const SwapChartHeader = styled.div`
+  width: 100%;
+  padding: 26px 24px 12px 24px;
+  min-height: 120px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const LeftPart = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
+
+export const RightPart = styled(LeftPart)`
+  width: 50%;
+`;
+
+export const SymbolName = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+`;
+
+export const PriceLine = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const Price = styled.div`
+  font-size: 28px;
+  font-weight: 500;
+  color: #000;
+`;
+
+export const ChangeRate = styled.div`
+  margin-left: 9px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #36CE93;
+  .dec {
+    color: red;
+  }
+`;
+
+export const Time = styled.div`
+  font-size: 12px;
+  color: #000000;
+  opacity: 0.4;
+`;
+
+export const PartLine = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const ValuePart = styled.div``;
+
+export const PartLabel = styled.div`
+  font-size: 12px;
+  color: #000000;
+  opacity: 0.4;
+  line-height: 150%;
+`;
+
+export const PartValue = styled.div`
+  font-size: 12px;
+  font-weight: 500;
+  color: #000000;
+  line-height: 150%;
+`;
+
+export const PartValueAddress = styled(PartValue)`
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const SwapChartContainer = styled.div`
+  flex: 1;
+  box-sizing: border-box;
+  background: #141c1c;
+`;
+
+export const SwapHistoryWrapper = styled.div`
+  max-width: 1200px;
+  padding: 32px;
+  width: 100%;
+  min-height: 667px;
+  background: #FFFFFF;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  border-radius: 20px;
+`;
+
+export const Tabs = styled.div`
+  display: flex;
+  margin-bottom: 16px;
+`;
+
+export const Tab = styled.div<any>`
+  margin-right: 48px;
+  font-size: 18px;
+  color: ${props => props.selected ? '#000' : 'rgba(0, 0, 0, 0.6)'};
+  font-weight: ${props => props.selected ? 500 : 400};
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const Table = styled.table`
+  width: 100%;
+`;
+
+export const TableHeader = styled.thead`
+  tr {
+    td {
+      font-size: 12px;
+      color: rgba(18, 19, 24, 0.6);
+    }
+  }
+`;
+
+export const Tr = styled.tr`
+  
+`;
+
+export const Td = styled.td`
+  padding: 17.5px 0;
+  border-bottom: 1px solid #F6F7FB;
+  font-size: 14px;
+  color: #121318;
+  &:last-of-type {
+    text-align: right;
+  }
+  &.Buy {
+    color: #36CE93;
+  }
+  &.Sell {
+    color: #F23A00;
+  }
+`;
+
+export const PaginationWrapper = styled.div`
+  padding: 27px;
+  display: flex;
+  justify-content: center;
+`;
+
+export const Pagination = styled.div`
+  display: flex;
+`;
+
+export const Page = styled.div`
+  width: 32px;
+  height: 32px;
+  margin: 0 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: #121318;
+  border: 1px solid #121318;
+  border-radius: 6px;
+  cursor: pointer;
+  &.selected {
+    font-weight: 500;
+    border-color: #FFAD06;
+    color: #FFAD06;
+  }
+  .gt {
+    display: none;    
+  }
+  &:hover {
+    opacity: 0.8;
+   .gt {
+      display: inline-block;    
+    } 
+    .dot {
+      display: none;
+    }
+  }
+`;
+
+export const SwapChartChartWrapper = styled.div`
+  position: relative;
+  flex: 1;
+  background: #141c1c;
+`;
+
+export const TimeBox = styled.div`
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  border: 1px solid #434651;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  max-width: max-content;
+  padding: 2px;
+  z-index: 10;
+`;
+
+export const TimeItem = styled.button`
+  background-color: initial;
+  color: #d1d4dc;
+  border-radius: 6px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  height: 34px;
+  min-width: 34px;
+  padding: 0 12px;
+  margin-left: 8px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  &.selected {
+    background-color: #142e61;
+    color: #bbd9fb;
+  }
+  &:hover {
+    background-color: #2a2e39;
+    color: #d1d4dc;
+  }
+  &:first-of-type {
+    margin-left: 0;
+  }
+`;

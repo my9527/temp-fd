@@ -106,7 +106,14 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "antd": "3.x",
+    "axios": "0.20.0",
+    "dayjs": "^1.11.7",
     "filecoin-address": "2.0.47-y.1",
-    "my-uniswap-sdk": "3.0.5"
+    "i": "^0.3.7",
+    "lightweight-charts": "^4.0.1",
+    "my-uniswap-sdk": "3.0.5",
+    "npm": "^9.6.6",
+    "react-hot-toast": "^2.4.1"
   }
 }
