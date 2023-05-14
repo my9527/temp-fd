@@ -39,6 +39,7 @@ class MiniRpcProvider implements AsyncSendable {
   private nextId = 1
   private batchTimeoutId: ReturnType<typeof setTimeout> | null = null
   private batch: BatchItem[] = []
+  private batchAlone: BatchItem[] = []
 
   constructor(chainId: number, url: string, batchWaitTimeMs?: number) {
     this.chainId = chainId
@@ -114,6 +115,61 @@ class MiniRpcProvider implements AsyncSendable {
       .catch(error => callback(error, null))
   }
 
+  // batch 只会有一个
+  public readonly requestByOne = async () => {
+    const batch = this.batchAlone
+    this.batchAlone = []
+    this.batchTimeoutId = null
+    let response: Response
+    try {
+      response = await fetch(this.url, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', accept: 'application/json' },
+        body: JSON.stringify(batch.map(item => item.request)[0])
+      })
+    } catch (error) {
+      batch.forEach(({ reject }) => reject(new Error('Failed to send batch call')))
+      return
+    }
+
+    if (!response.ok) {
+      batch.forEach(({ reject }) => reject(new RequestError(`${response.status}: ${response.statusText}`, -32000)))
+      return
+    }
+
+    let json
+    try {
+      json = await response.json()
+    } catch (error) {
+      batch.forEach(({ reject }) => reject(new Error('Failed to parse JSON response')))
+      return
+    }
+    const byKey = batch.reduce<{ [id: number]: BatchItem }>((memo, current) => {
+      memo[current.request.id] = current
+      return memo
+    }, {})
+   try{
+    for (const result of [json]) {
+      const {
+        resolve,
+        reject,
+        request: { method }
+      } = byKey[result.id]
+      if (resolve && reject) {
+        if ('error' in result) {
+          reject(new RequestError(result?.error?.message, result?.error?.code, result?.error?.data))
+        } else if ('result' in result) {
+          resolve(result.result)
+        } else {
+          reject(new RequestError(`Received unexpected JSON-RPC response to ${method} request.`, -32000, result))
+        }
+      }
+    }
+   }catch(e){
+    console.log(e)
+   }
+  }
+
   public readonly request = async (
     method: string | { method: string; params: unknown[] },
     params?: unknown[] | object
@@ -124,6 +180,24 @@ class MiniRpcProvider implements AsyncSendable {
     if (method === 'eth_chainId') {
       return `0x${this.chainId.toString(16)}`
     }
+    if(this.chainId === 314) {
+      const promise = new Promise((resolve, reject) => {
+        this.batchAlone.push({
+          request: {
+            jsonrpc: '2.0',
+            id: this.nextId++,
+            method,
+            params
+          },
+          resolve,
+          reject
+        })
+      })
+      setTimeout(this.requestByOne, 0);
+      // this.batchTimeoutId = this.batchTimeoutId ?? setTimeout(this.clearBatch, this.batchWaitTimeMs)
+      return promise
+    }
+    console.log("mininini=====>", this.chainId)
     const promise = new Promise((resolve, reject) => {
       this.batch.push({
         request: {

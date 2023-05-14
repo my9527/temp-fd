@@ -10,7 +10,7 @@ export default function SwapHistory() {
   const [data, setData] = useState([]);
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(1);
-  const { lqaddress } = useSwapAddress();
+  const { lqaddress, pair } = useSwapAddress();
 
   useEffect(() => {
     // 重置数据
@@ -51,7 +51,7 @@ export default function SwapHistory() {
       </Tabs>
       {
         data.length === 0 ? <div style={{ textAlign: "center", marginTop: '3rem' }} >No data</div> : <Fragment>
-          <Table data={data} />
+          <Table data={data} pair={pair} />
           <PaginationWrapper>
             <Pagination total={total} current={current} pageSize={15} onChange={handleChange} />
           </PaginationWrapper>

@@ -5,6 +5,8 @@ import dayjs from 'dayjs';
 import clsx from 'clsx';
 import parsePrice from '../../utils/parsePrice';
 import formatAddress from '../../utils/formatAddress';
+import { utils } from 'ethers';
+import { useCurrency } from '../../hooks/Tokens';
 
 interface ItemProp {
   blocktime: number;
@@ -17,15 +19,20 @@ interface ItemProp {
 }
 
 interface DataProps {
-  data: Array<ItemProp>;
+  data: ItemProp[]
+  pair: (string | undefined)[]
 }
 
 const formatPrice = (price: any) => new Intl.NumberFormat('en-US', {
   //@ts-ignore
-  notation: "compact"
+  notation: "compact",
+  maximumSignificantDigits: 4 
 }).format(price);
 
-export default function TableRoot({ data }: DataProps) {
+
+export default function TableRoot({ data, pair }: DataProps) {
+  const base = useCurrency(pair[1])
+  const quota = useCurrency(pair[0])
   return (
     <Table>
       <TableHeader>
@@ -33,8 +40,8 @@ export default function TableRoot({ data }: DataProps) {
           <Td>Time</Td>
           <Td width={'120px'}>Type</Td>
           <Td width={'180px'}>Price</Td>
-          <Td>Amount</Td>
-          <Td width={'180px'}>Volumn</Td>
+          <Td>Amount({quota?.symbol})</Td>
+          <Td width={'180px'}>Volumn({base?.symbol})</Td>
           {/* <Td>DEX</Td> */}
           <Td style={{ textAlign: 'right' }}>User</Td>
         </Tr>
@@ -45,8 +52,8 @@ export default function TableRoot({ data }: DataProps) {
             <Td>{dayjs(Number(`${item.blocktime}000`)).format('YYYY-MM-DD HH:mm:ss')}</Td>
             <Td className={clsx({ Buy: item.side === 0, Sell: item.side === 1 })}>{item.side === 0 ? 'Buy' : 'Sell'}</Td>
             <Td>{parsePrice(item.price)}</Td>
-            <Td>{formatPrice(item.amount)}</Td>
-            <Td>{formatPrice(item.volume)}</Td>
+            <Td>{formatPrice(utils.formatEther(item.amount))}</Td>
+            <Td>{formatPrice(utils.formatEther(item.volume))}</Td>
             {/* <Td>{item.address.slice(0, 4)}</Td> */}
             <Td>{formatAddress(item.from)}</Td>
           </Tr>

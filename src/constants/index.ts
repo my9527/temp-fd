@@ -63,7 +63,7 @@ const WETH_ONLY: ChainTokenList = {
   [ChainId.RINKEBY]: [WETH[ChainId.RINKEBY]],
   [ChainId.GÖRLI]: [WETH[ChainId.GÖRLI]],
   [ChainId.KOVAN]: [WETH[ChainId.KOVAN]],
-  [ChainId.FILE]: [...CommonBaseTokens],
+  [ChainId.FILE]: [WETH[ChainId.FILE],...CommonBaseTokens],
   [ChainId.FILEH]: [WETH[ChainId.FILEH], FILEDOGEH],
 }
 

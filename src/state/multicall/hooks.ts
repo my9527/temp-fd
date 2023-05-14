@@ -222,6 +222,7 @@ export function useMultipleContractSingleData(
   const results = useCallsData(calls, options)
 
   const latestBlockNumber = useBlockNumber()
+  console.log("latestBlockNumber", latestBlockNumber);
 
   return useMemo(() => {
     return results.map(result => toCallState(result, contractInterface, fragment, latestBlockNumber))

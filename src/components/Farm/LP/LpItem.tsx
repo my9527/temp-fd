@@ -62,6 +62,7 @@ export default function LpItem({ pair, pid, chainId }: LPProps) {
 
   const lpTotal = useTotalSupply(lp?.liquidityToken);
 
+
   const fileDogePrice = useFilPerToken(pair[0], chainId || ChainId.FILE)
 
   const lpPrice = useLPPrice(lp, lpTotal, filPrice);

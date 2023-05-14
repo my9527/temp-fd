@@ -11,6 +11,9 @@ import {
 } from './styleds';
 import parsePrice from '../../utils/parsePrice';
 import formatAddress from '../../utils/formatAddress';
+import { useCurrency } from "../../hooks/Tokens";
+import { FILEDOGE } from "../../constants";
+import CurrencyLogo from "../CurrencyLogo";
 
 interface HeaderProps {
   address: string;
@@ -42,10 +45,17 @@ export default function SwapChartHeaderRoot({ pair, symbol, address, lqaddress, 
     getData();
   }, [lqaddress]);
 
+  const base = useCurrency(pair[0] || FILEDOGE.address);
+  const quote = useCurrency(pair[1] || undefined)
+
   return (
     <SwapChartHeader>
       <LeftPart>
-        <SymbolName>{symbol || 'FILEDOGE/FIL'}</SymbolName>
+        <SymbolName>
+          <div>
+            <CurrencyLogo currency={base || undefined} size={'24px'} />{base?.symbol} / <CurrencyLogo currency={quote || undefined} size={'24px'} />{quote?.symbol}
+          </div>
+        </SymbolName>
         <PriceLine>
           <Price>{parsePrice(data.latestprice) || 0}</Price>
           <ChangeRate className={clsx({ dec: data.change < 0 })}>{data.change < 0 ? '-' : '+'}{data.change}({(data.changeRate * 100).toFixed(2)}%)</ChangeRate>
@@ -76,7 +86,7 @@ export default function SwapChartHeaderRoot({ pair, symbol, address, lqaddress, 
           </ValuePart> */}
           <ValuePart>
             <PartLabel>Liquidity</PartLabel>
-            <PartValue>{liquidity || 0}</PartValue>
+            <PartValue>{liquidity || '-'}</PartValue>
           </ValuePart>
           <ValuePart>
             <PartLabel>24h Volume</PartLabel>

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import useCopyClipboard from '../../hooks/useCopyClipboard'
 import CopySvg from '../../assets/svg/copy.svg';
+import { message } from "antd"
 
 const CopyWrapper = styled.div`
   display: flex;
@@ -26,6 +27,7 @@ export default function Copy({ children, toCopy, onCopy }: CopyProps) {
 
   const handleClick = () => {
     setCopied(toCopy as string); 
+    message.info("Copied")
     onCopy?.(isCopied);
   }
 
