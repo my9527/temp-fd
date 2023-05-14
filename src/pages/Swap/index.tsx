@@ -21,7 +21,7 @@ import TokenWarningModal from '../../components/TokenWarningModal'
 import ProgressSteps from '../../components/ProgressSteps'
 import SwapChart from '../../components/swap/SwapChart';
 import SwapHistory from '../../components/swap/SwapHistory';
-import { BETTER_TRADE_LINK_THRESHOLD, INITIAL_ALLOWED_SLIPPAGE } from '../../constants'
+import { BETTER_TRADE_LINK_THRESHOLD, FILEDOGE, INITIAL_ALLOWED_SLIPPAGE } from '../../constants'
 import { getTradeVersion, isTradeBetter } from '../../data/V1'
 import { useActiveWeb3React } from '../../hooks'
 import { useCurrency } from '../../hooks/Tokens'
@@ -286,9 +286,16 @@ export default function Swap() {
     maxAmountInput && onUserInput(Field.INPUT, maxAmountInput.toExact())
   }, [maxAmountInput, onUserInput])
 
-  const handleOutputSelect = useCallback(outputCurrency => onCurrencySelection(Field.OUTPUT, outputCurrency), [
+  const handleOutputSelect = useCallback(outputCurrency => {
+    onCurrencySelection(Field.OUTPUT, outputCurrency)
+  }, [
     onCurrencySelection
-  ])
+  ]);
+
+  // 初始化时选中filedoge
+  useEffect(() => {
+    handleOutputSelect(FILEDOGE);
+  }, []);
 
   return (
     <PageWrapper>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Fragment } from "react"
 import { Pagination } from "antd";
 import { SwapHistoryWrapper, PaginationWrapper, Tabs, Tab } from './styleds';
 import Table from "./Table";
@@ -13,6 +13,11 @@ export default function SwapHistory() {
   const { lqaddress } = useSwapAddress();
 
   useEffect(() => {
+    // 重置数据
+    setData([]);
+    setTotal(0);
+    setCurrent(1);
+
     getData(1);
   }, [lqaddress]);
 
@@ -25,7 +30,7 @@ export default function SwapHistory() {
     })
   }
 
-  const handleChange =(page: number) => {
+  const handleChange = (page: number) => {
     getData(page)
   }
 
@@ -44,10 +49,16 @@ export default function SwapHistory() {
         <Tab selected>Trade History</Tab>
         {/* <Tab>My Trade</Tab> */}
       </Tabs>
-      <Table data={data} />
-      <PaginationWrapper>
-        <Pagination total={total} current={current} pageSize={15} onChange={handleChange} />
-      </PaginationWrapper>
+      {
+        data.length === 0 ? <div style={{ textAlign: "center", marginTop: '3rem' }} >No data</div> : <Fragment>
+          <Table data={data} />
+          <PaginationWrapper>
+            <Pagination total={total} current={current} pageSize={15} onChange={handleChange} />
+          </PaginationWrapper>
+        </Fragment>
+      }
+
+
     </SwapHistoryWrapper>
   )
 }
