@@ -88,19 +88,19 @@ export default function SwapChartChart({ lqaddress, pair }: { lqaddress: string,
     GetCandles(time, lqaddress, from, to).then((Resp: any) => {
       if (Resp?.data?.data) {
         if(Resp?.data?.data.length){
-          let newDatas = [];
+          let newDatas: any[] = [];
           if(isUpdate) {
             newDatas = [...chartDatas, ...Resp?.data?.data].sort((a, b) => a.time - b.time);
           } else {
             newDatas  = [...Resp?.data?.data]
           }
-          console.log("newDatas", chartDatas);
+          chartSeries.current.setData(newDatas);
           // @ts-ignore
           updateChartDatas(newDatas);
           const lastId = Resp?.data?.data.length -1;
           
           updateLatestCandle(Resp?.data?.data[lastId]);
-          chartSeries.current.setData(newDatas);
+          
         }
         // chartSeries.current
       }
@@ -109,8 +109,8 @@ export default function SwapChartChart({ lqaddress, pair }: { lqaddress: string,
 
   const changeTime = (time: string) => {
     if (time === timeTick) return;
-    init();
-    updateChartDatas([]);
+    // init();
+    // updateChartDatas([]);
     setTimeTick(time);
     const { from, to} = getInitTimeRange();
     setTimeout(() => {
