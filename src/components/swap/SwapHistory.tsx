@@ -11,17 +11,21 @@ export default function SwapHistory() {
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(1);
   const { lqaddress, pair } = useSwapAddress();
+  console.log("useSwapAddress ===>", lqaddress);
 
   useEffect(() => {
     // 重置数据
     setData([]);
     setTotal(0);
+    if(!lqaddress)return;
+
     setCurrent(1);
 
     getData(1);
   }, [lqaddress]);
 
   const getData = (page: number) => {
+    console.log("lqaddress", lqaddress)
     GetHistory(page, lqaddress).then((Resp: any) => {
       if (!Resp || !Resp.data) return;
       setData(Resp.data.data.items);
@@ -41,7 +45,7 @@ export default function SwapHistory() {
     return () => {
       clearInterval(timer);
     }
-  }, [current]);
+  }, [current, lqaddress]);
 
   return (
     <SwapHistoryWrapper>
@@ -49,14 +53,12 @@ export default function SwapHistory() {
         <Tab selected>Trade History</Tab>
         {/* <Tab>My Trade</Tab> */}
       </Tabs>
-      {
-        data.length === 0 ? <div style={{ textAlign: "center", marginTop: '3rem' }} >No data</div> : <Fragment>
+      <Fragment>
           <Table data={data} pair={pair} />
-          <PaginationWrapper>
+          {data.length > 0 ? <PaginationWrapper>
             <Pagination total={total} current={current} pageSize={15} onChange={handleChange} />
-          </PaginationWrapper>
+          </PaginationWrapper> : undefined}
         </Fragment>
-      }
 
 
     </SwapHistoryWrapper>

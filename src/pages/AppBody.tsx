@@ -16,7 +16,7 @@ export const BodyWrapper = styled.div`
     0px 24px 32px rgba(0, 0, 0, 0.01);
   border-radius: 30px;
   padding: 1rem;
-  border: 2px solid #000;
+  border: 2px solid rgba(0,0,0,0.12);
 `
 
 /**

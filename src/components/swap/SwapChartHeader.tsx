@@ -14,6 +14,11 @@ import formatAddress from '../../utils/formatAddress';
 import { useCurrency } from "../../hooks/Tokens";
 import { FILEDOGE } from "../../constants";
 import CurrencyLogo from "../CurrencyLogo";
+import styled from "styled-components";
+const LogoWrapper = styled.span`
+  display: inline-flex;
+  align-items: center;
+`
 
 interface HeaderProps {
   address: string;
@@ -23,42 +28,60 @@ interface HeaderProps {
   liquidity: string | undefined;
 }
 
+const symbolCheck=(sym: string | undefined)=> {
+  if(sym && sym.toLowerCase() === 'wfil') {
+    return 'FIL'
+  }
+  return sym;
+}
+
+const formatPrice = (price: any) => {
+  if(price === undefined) {
+    return '-'
+  }
+  return new Intl.NumberFormat('en-US', {
+    //@ts-ignore
+    notation: "compact",
+    maximumSignificantDigits: 4 
+  }).format(price)
+};
+
 export default function SwapChartHeaderRoot({ pair, symbol, address, lqaddress, liquidity }: HeaderProps) {
   const [data, setData] = useState<any>({});
 
-  const getData = () => {
-    GetInfo(lqaddress).then((Resp: any) => {
+  console.log("lqaddress ---->", lqaddress);
+  const getData = (_lpaddress:string) => {
+    GetInfo(_lpaddress).then((Resp: any) => {
       setData(Resp.data.data);
     });
   }
 
   useEffect(() => {
     const timer = setInterval(() => {
-      getData();
+      getData(lqaddress);
     }, 60 * 1000)
     return () => {
       clearInterval(timer);
     }
-  }, []);
-
-  useEffect(() => {
-    getData();
   }, [lqaddress]);
 
-  const base = useCurrency(pair[0] || FILEDOGE.address);
+  useEffect(() => {
+    getData(lqaddress);
+  }, [lqaddress]);
+
+  const base = useCurrency(pair[0] || undefined);
   const quote = useCurrency(pair[1] || undefined)
 
   return (
     <SwapChartHeader>
       <LeftPart>
-        <SymbolName>
-          <div>
-            <CurrencyLogo currency={base || undefined} size={'24px'} />{base?.symbol} / <CurrencyLogo currency={quote || undefined} size={'24px'} />{quote?.symbol}
-          </div>
+        <SymbolName style={{ display: 'inline-flex', alignItems: "center"}}>
+        {/* <LogoWrapper><CurrencyLogo currency={base || undefined} size={'24px'} /> <CurrencyLogo style={{    transform: "translateX(-6px)" }} currency={quote || undefined} size={'24px'} /></LogoWrapper> {symbolCheck(base?.symbol)} / {symbolCheck(quote?.symbol)} */}
+        <LogoWrapper><CurrencyLogo currency={base || undefined} size={'24px'} /> <CurrencyLogo style={{    transform: "translateX(-6px)" }} currency={quote || undefined} size={'24px'} /></LogoWrapper> {symbol}
         </SymbolName>
         <PriceLine>
-          <Price>{parsePrice(data.latestprice) || 0}</Price>
-          <ChangeRate className={clsx({ dec: data.change < 0 })}>{data.change < 0 ? '-' : '+'}{data.change}({(data.changeRate * 100).toFixed(2)}%)</ChangeRate>
+          <Price>{parsePrice(data?.latestprice) || 0}</Price>
+          <ChangeRate className={clsx({ dec: data?.change < 0 })}>{data?.change < 0 ? '-' : '+'}{(data?.changeRate * 100 || 0).toFixed(2) || '-'}%</ChangeRate>
         </PriceLine>
         {/* <Time>Apr5, 2023, 12:00 PM(UTC)</Time> */}
       </LeftPart>
@@ -90,11 +113,11 @@ export default function SwapChartHeaderRoot({ pair, symbol, address, lqaddress, 
           </ValuePart>
           <ValuePart>
             <PartLabel>24h Volume</PartLabel>
-            <PartValue>{data.vol24}</PartValue>
+            <PartValue>{(data?.vol24) * 2 || '-'}</PartValue>
           </ValuePart>
           <ValuePart>
             <PartLabel>24h Amount</PartLabel>
-            <PartValue>{data.amount24}</PartValue>
+            <PartValue>{formatPrice(data?.amount24) || '-'}</PartValue>
           </ValuePart>
         </PartLine>
       </RightPart>

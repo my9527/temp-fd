@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import map from 'lodash/map';
 import { Table, TableHeader, Tr, Td } from './styleds';
 import dayjs from 'dayjs';
@@ -26,7 +26,8 @@ interface DataProps {
 const formatPrice = (price: any) => new Intl.NumberFormat('en-US', {
   //@ts-ignore
   notation: "compact",
-  maximumSignificantDigits: 4 
+  minimumFractionDigits:2,
+  maximumSignificantDigits: 6 
 }).format(price);
 
 
@@ -34,6 +35,7 @@ export default function TableRoot({ data, pair }: DataProps) {
   const base = useCurrency(pair[1])
   const quota = useCurrency(pair[0])
   return (
+    <Fragment>
     <Table>
       <TableHeader>
         <Tr>
@@ -41,11 +43,12 @@ export default function TableRoot({ data, pair }: DataProps) {
           <Td width={'120px'}>Type</Td>
           <Td width={'180px'}>Price</Td>
           <Td>Amount({quota?.symbol})</Td>
-          <Td width={'180px'}>Volumn({base?.symbol})</Td>
+          <Td width={'180px'}>Volume({base?.symbol})</Td>
           {/* <Td>DEX</Td> */}
           <Td style={{ textAlign: 'right' }}>User</Td>
         </Tr>
       </TableHeader>
+      
       {
         map(data, (item: any, index) => (
           <Tr key={index}>
@@ -60,5 +63,7 @@ export default function TableRoot({ data, pair }: DataProps) {
         ))
       }
     </Table>
+    {data.length === 0 ? <div style={{ textAlign: "center", marginTop: "2rem" }}>No data</div> : null}
+    </Fragment>
   );
 }
