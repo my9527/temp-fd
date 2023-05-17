@@ -38,6 +38,7 @@ export default function useSwapAddress() {
       lqaddress,
       address,
       pair: [token0?.address, token1?.address],
+      tokens: [token0, token1],
       liquidity
     }
   }, [pair, symbol, lqaddress, address, liquidity])

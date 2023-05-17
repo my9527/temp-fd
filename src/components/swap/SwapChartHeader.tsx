@@ -49,7 +49,6 @@ const formatPrice = (price: any) => {
 export default function SwapChartHeaderRoot({ pair, symbol, address, lqaddress, liquidity }: HeaderProps) {
   const [data, setData] = useState<any>({});
 
-  console.log("lqaddress ---->", lqaddress);
   const getData = (_lpaddress:string) => {
     GetInfo(_lpaddress).then((Resp: any) => {
       setData(Resp.data.data);

@@ -10,7 +10,7 @@ export default function SwapChart() {
   return (
     <SwapChartWrapper>
       <SwapChartHeader liquidity={liquidity} pair={pair} symbol={symbol} address={address} lqaddress={lqaddress} />
-      <SwapChartChart key={`${lqaddress}_11`} lqaddress={lqaddress} />
+      <SwapChartChart key={`${lqaddress}_11`} lqaddress={lqaddress}  pair={pair}/>
     </SwapChartWrapper>
   )
 }

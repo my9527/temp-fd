@@ -27,7 +27,7 @@ const getInitTimeRange = () => {
   return {from, to}
 }
 
-export default function SwapChartChart({ lqaddress }: { lqaddress: string }) {
+export default function SwapChartChart({ lqaddress, pair }: { lqaddress: string, pair: string[] }) {
   const ref = useRef(null) as any;
   const chart = useRef(null) as any;
   const chartSeries = useRef(null) as any;
@@ -84,13 +84,17 @@ export default function SwapChartChart({ lqaddress }: { lqaddress: string }) {
     init()
   }, []);
 
-  const handleGetSwapData = (time: string, from: number, to: number, init: boolean = false) => {
+  const handleGetSwapData = (isUpdate = true, time:string, from: number, to: number, init: boolean = false) => {
     GetCandles(time, lqaddress, from, to).then((Resp: any) => {
       if (Resp?.data?.data) {
         if(Resp?.data?.data.length){
-          const newDatas = [...chartDatas, ...Resp?.data?.data];
-          console.log("newDatas", newDatas);
-          console.log("Resp?.data?.data", Resp?.data?.data)
+          let newDatas = [];
+          if(isUpdate) {
+            newDatas = [...chartDatas, ...Resp?.data?.data].sort((a, b) => a.time - b.time);
+          } else {
+            newDatas  = [...Resp?.data?.data]
+          }
+          console.log("newDatas", chartDatas);
           // @ts-ignore
           updateChartDatas(newDatas);
           const lastId = Resp?.data?.data.length -1;
@@ -103,20 +107,20 @@ export default function SwapChartChart({ lqaddress }: { lqaddress: string }) {
     });
   };
 
-  const changeTime = useCallback((time) => {
+  const changeTime = (time: string) => {
     if (time === timeTick) return;
-    // init();
-    // chartSeries.current.setData([]);
-    // chart.current.timeScale().fitContent();
+    init();
     updateChartDatas([]);
     setTimeTick(time);
     const { from, to} = getInitTimeRange();
-    handleGetSwapData(time, from, to, true);
-  }, [timeTick, handleGetSwapData]);
+    setTimeout(() => {
+      handleGetSwapData(false, time, from, to, true);
+    }, 5);
+  }
 
   useEffect(() => {
     const { from, to} = getInitTimeRange();
-    handleGetSwapData('15min', from,to,true);
+    handleGetSwapData(false, '15min', from,to,true);
   }, [lqaddress]);
 
   useEffect(() => {
@@ -127,7 +131,7 @@ export default function SwapChartChart({ lqaddress }: { lqaddress: string }) {
       timeRange.from = timeRange.from > timeRange.to ? timeRange.to : timeRange.from;
       // @ts-ignore
       timeRange.to =  timeRange.to + CandleTimeSlice[timeTick];
-      handleGetSwapData(timeTick, timeRange.from, timeRange.to );
+      handleGetSwapData(true, timeTick, timeRange.from, timeRange.to );
     // @ts-ignore
     }, TimesDelayMap[timeTick] * 1000);
     return () => {
@@ -136,7 +140,7 @@ export default function SwapChartChart({ lqaddress }: { lqaddress: string }) {
   }, [timeTick, lqaddress, lastestCandles, chartDatas]);
 
   return (
-    <SwapChartChartWrapper>
+    <SwapChartChartWrapper key={timeTick}>
       <TimeBox>
         {Times.map((item, key) => (
           <TimeItem key={key} onClick={() => changeTime(item)} className={clsx({ selected: item === timeTick })}>{item}</TimeItem>

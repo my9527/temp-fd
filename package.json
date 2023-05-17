@@ -82,7 +82,7 @@
     "@walletconnect/web3-provider": "1.1.1-alpha.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "NODE_ENV=development react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build && rm -rf ./swap && cp -r ./build ./swap",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
