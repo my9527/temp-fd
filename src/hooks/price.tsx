@@ -21,7 +21,8 @@ export const PriceProvider = ({ children }: PriceProvderProps) => {
         async function _init() {
             let result = null;
             try{
-              result = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd")
+              result = await fetch("https://data.filedoge.io/api/swap/price")
+            // result = await fetch("http://localhost:3000/swap/price")
               .then(res => res.json())
               .catch(e => console.log("getFilPrice fetch ", e))
             } catch(e) {

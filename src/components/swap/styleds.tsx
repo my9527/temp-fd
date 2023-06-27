@@ -198,8 +198,8 @@ export const ChangeRate = styled.div`
   font-size: 14px;
   font-weight: 500;
   color: #36CE93;
-  .dec {
-    color: red;
+  &.dec {
+    color: red!important;
   }
 `;
 
@@ -348,6 +348,7 @@ export const SwapChartChartWrapper = styled.div`
   position: relative;
   flex: 1;
   background: #141c1c;
+  z-index: 0;
 `;
 
 export const TimeBox = styled.div`

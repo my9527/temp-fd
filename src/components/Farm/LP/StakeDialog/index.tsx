@@ -47,7 +47,8 @@ interface ModalProps {
   lpPrice: Fraction | number | string | undefined | null
   fileDogePrice: Fraction | string | undefined | null
   lp: Pair | null
-  setPendingTransaction: (pending: any) => void
+  setPendingTransaction: (pending: any) => void,
+  onPendingTxt: any
 }
 
 export default function StakeDialog({ 
@@ -61,7 +62,8 @@ export default function StakeDialog({
   account, 
   lpPrice, 
   lp,
-  setPendingTransaction
+  setPendingTransaction,
+  onPendingTxt
  }: ModalProps) {
 
   const farmContract = useFarmContract(true);
@@ -79,6 +81,7 @@ export default function StakeDialog({
     farmContract?.address);
 
   const closeModal = useCallback(() => {
+    onPendingTxt(false);
     setInputAmount("");
     onDismiss();
   }, []);
@@ -90,17 +93,20 @@ export default function StakeDialog({
         return;
       }
       setLoading(true);
+      onPendingTxt(true);
       // const parsedAmount = tryParseAmount(inputAmount, WETH[chainId])
       // console.log('parsedAmount', utils.parseEther(parsedAmount?.toExact() || '0'));
       try {
         await farmContract[methodName](pid, utils.parseEther(inputAmount || '0').toString()).then((response:any) => {
-          console.log('response', response)
+          console.log('response', response.has);
           setLoading(false);
+          onPendingTxt(false);
           addTransaction(response);
           closeModal();
         });
       } catch(e) {
         setLoading(false);
+        onPendingTxt(false);
       }
     }
     _init()

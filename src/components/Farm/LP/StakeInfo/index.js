@@ -8,7 +8,7 @@ import { useSingleCallResult } from "../../../../state/multicall/hooks";
 import { useToSignificant, useUSD, toCurrencyAmount } from "../constant";
 import { useTransactionAdder } from "../../../../state/transactions/hooks"; 
 
-export default function StakeInfo({ staked, openStakeModal, account, pid, lpPrice, fileDogePrice }) {
+export default function StakeInfo({ staked, openStakeModal, account, pid, lpPrice, fileDogePrice, setPendingTxt }) {
 
   const farmContract = useFarmContract(true);
   const addTransaction = useTransactionAdder();
@@ -25,15 +25,18 @@ export default function StakeInfo({ staked, openStakeModal, account, pid, lpPric
       console.log('harvest')
       if(!+pendingRd)return;
       setHavestLoading(true)
+      setPendingTxt(true);
       try {
         await farmContract.harvest(pid).then(addTransaction);
         setHavestLoading(false)
+        setPendingTxt(false)
       //  .then(reponse => {
       //     addTransaction(reponse);
       //     setHavestLoading(false)
       //  });
       } catch(e) {
         setHavestLoading(false)
+        setPendingTxt(false)
       }
     }
     _init();

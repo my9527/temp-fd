@@ -53,7 +53,7 @@ export const ETHERSCAN_PREFIXES: { [chainId in ChainId]: string } = {
   4: 'rinkeby.',
   5: 'goerli.',
   42: 'kovan.',
-  314: 'https://filfox.info/en',
+  314: 'https://filscan.io',
   3141: 'https://hyperspace.filfox.info/en'
 }
 

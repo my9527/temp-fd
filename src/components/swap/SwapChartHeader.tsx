@@ -15,6 +15,8 @@ import { useCurrency } from "../../hooks/Tokens";
 import { FILEDOGE } from "../../constants";
 import CurrencyLogo from "../CurrencyLogo";
 import styled from "styled-components";
+import { isMobile } from "react-device-detect";
+
 const LogoWrapper = styled.span`
   display: inline-flex;
   align-items: center;
@@ -72,7 +74,7 @@ export default function SwapChartHeaderRoot({ pair, symbol, address, lqaddress, 
   const quote = useCurrency(pair[1] || undefined)
 
   return (
-    <SwapChartHeader>
+    <SwapChartHeader style={{ flexWrap: isMobile ? 'wrap' : 'unset' }}>
       <LeftPart>
         <SymbolName style={{ display: 'inline-flex', alignItems: "center"}}>
         {/* <LogoWrapper><CurrencyLogo currency={base || undefined} size={'24px'} /> <CurrencyLogo style={{    transform: "translateX(-6px)" }} currency={quote || undefined} size={'24px'} /></LogoWrapper> {symbolCheck(base?.symbol)} / {symbolCheck(quote?.symbol)} */}
@@ -80,11 +82,11 @@ export default function SwapChartHeaderRoot({ pair, symbol, address, lqaddress, 
         </SymbolName>
         <PriceLine>
           <Price>{parsePrice(data?.latestprice) || 0}</Price>
-          <ChangeRate className={clsx({ dec: data?.change < 0 })}>{data?.change < 0 ? '-' : '+'}{(data?.changeRate * 100 || 0).toFixed(2) || '-'}%</ChangeRate>
+          <ChangeRate className={clsx({ dec: +data?.change < 0 })}>{+data?.change < 0 ? '-' : '+'}{Math.abs((data?.changeRate * 100 || 0)).toFixed(2) || '-'}%</ChangeRate>
         </PriceLine>
         {/* <Time>Apr5, 2023, 12:00 PM(UTC)</Time> */}
       </LeftPart>
-      <RightPart>
+      <RightPart style={{ width: isMobile ? '100%' : '50%' }}>
         <PartLine>
           <ValuePart>
             <PartLabel>Address</PartLabel>

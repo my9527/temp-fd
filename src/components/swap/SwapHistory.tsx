@@ -5,6 +5,7 @@ import Table from "./Table";
 import 'antd/dist/antd.css';
 import { GetHistory } from '../../data/SwapCandles';
 import useSwapAddress from "../../hooks/useSwapAddress";
+import { isMobile } from "react-device-detect";
 
 export default function SwapHistory() {
   const [data, setData] = useState([]);
@@ -48,7 +49,7 @@ export default function SwapHistory() {
   }, [current, lqaddress]);
 
   return (
-    <SwapHistoryWrapper>
+    <SwapHistoryWrapper style={{ marginTop: isMobile ? '2rem' : '0' }}>
       <Tabs>
         <Tab selected>Trade History</Tab>
         {/* <Tab>My Trade</Tab> */}
@@ -56,7 +57,7 @@ export default function SwapHistory() {
       <Fragment>
           <Table data={data} pair={pair} />
           {data.length > 0 ? <PaginationWrapper>
-            <Pagination total={total} current={current} pageSize={15} onChange={handleChange} />
+            <Pagination showLessItems={true} total={total} current={current} pageSize={15} onChange={handleChange} />
           </PaginationWrapper> : undefined}
         </Fragment>
 

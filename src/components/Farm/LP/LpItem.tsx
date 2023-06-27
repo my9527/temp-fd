@@ -113,12 +113,11 @@ export default function LpItem({ pair, pid, chainId }: LPProps) {
               <ItemTitle>APY</ItemTitle>
               <APRValue>{calAPR}%</APRValue>
             </Item>
-            <Item>
+            {/* <Item>
               <ItemTitle>History(FILEDOGE)</ItemTitle>
               <ItemValue>{toCurrencyAmount(rewardDebt).toFixed(2) || '0.00'}</ItemValue>
-              {/* <div>≈ $ {fileDogePrice && rewardDebt ? formatEther(fileDogePrice?.multiply(rewardDebt?.toString()).toSignificant(6) || '0') : '0'}</div> */}
-              {/* <div>≈ $ {useUSD(+(fileDogePrice?.toSignificant(8) || '0'), rewardDebt?.toString())}</div> */}
-            </Item>
+             
+            </Item> */}
             <Item>
               <ItemTitle>Liquidity(LP)</ItemTitle>
               <ItemValue>$ {useUSD(lpPrice, totalStaked ? totalStaked?.toFixed(2) : 0)}</ItemValue>

@@ -28,6 +28,7 @@ type PendingTransaction = {
 
 export default function Farmings({ lp, stakeInfo, pid, lpPrice, fileDogePrice }: FarmingProp) {
   const [openStake, setOpenStake] = useState("");
+  const [pendingTxt, setPendingTxt] = useState(false);
   const toggleWalletModal = useWalletModalToggle();
   const { account } = useActiveWeb3React();
   const [hasStake] = useState(false);
@@ -56,6 +57,7 @@ export default function Farmings({ lp, stakeInfo, pid, lpPrice, fileDogePrice }:
           ?
           <>
             <StakeInfo
+              setPendingTxt={setPendingTxt}
               account={account}
               pid={pid}
               lpPrice={lpPrice}
@@ -75,12 +77,13 @@ export default function Farmings({ lp, stakeInfo, pid, lpPrice, fileDogePrice }:
               fileDogePrice={fileDogePrice}
               onDismiss={() => setOpenStake("")}
               lp={lp}
+              onPendingTxt={setPendingTxt}
               setPendingTransaction={(pending: PendingTransaction) => setPendingTransaction(pending)}
             />
             <TransactionConfirmationModal
-               isOpen={false}
-               onDismiss={() => setOpenStake("")}
-               attemptingTxn={pendingTransaction.attemptingTxn}
+               isOpen={pendingTxt}
+               onDismiss={() => setPendingTxt(false)}
+               attemptingTxn={true}
                hash={pendingTransaction.txhash}
                content={() => <div>confirmationContent</div>}
                pendingText={"pendingText"}

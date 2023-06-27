@@ -1,5 +1,5 @@
 import React from 'react';
-import { Currency, Token, WETH } from "my-uniswap-sdk";
+import { Currency, Pair, Token, WETH } from "my-uniswap-sdk";
 import { useSwapState } from '../state/swap/hooks';
 import { useCurrency, useToken } from '../hooks/Tokens'
 import { usePair } from '../data/Reserves'
@@ -28,7 +28,8 @@ export default function useSwapAddress() {
   const [token0, token1] = ((tokenA?.address || '').toLowerCase() < (tokenB?.address || '').toLowerCase()) ? [tokenA, tokenB] : [tokenB, tokenA];
   const symbol = (tokenA.symbol != tokenB.symbol ) ? `${token0?.symbol}/${token1?.symbol}`.replace('WFIL', 'FIL') : 'WFIL/FIL';
 
-  const lqaddress = pair?.liquidityToken.address || '';
+  // const lqaddress = pair?.liquidityToken.address || '';
+  const lqaddress = tokenA.address !== tokenB.address ? Pair.getAddress(token0, token1) : "";
 
   const address = token0?.address || '';
   const liquidity =`${formatNumber(pair?.reserve0.toFixed(2)) || '-'}/${formatNumber(pair?.reserve1.toFixed(2)) || '-'}` ;

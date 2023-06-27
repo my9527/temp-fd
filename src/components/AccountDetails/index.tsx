@@ -380,7 +380,7 @@ export default function AccountDetails({
                             href={chainId && getEtherscanLink(chainId, ENSName, 'address')}
                           >
                             <LinkIcon size={16} />
-                            <span style={{ marginLeft: '4px' }}>view on filfox</span>
+                            <span style={{ marginLeft: '4px' }}>view on filscan</span>
                           </AddressLink>
                         )}
                       </div>

@@ -49,6 +49,7 @@ import { FILEDOGEH } from '../../constants'
 // import { isMobile } from 'react-device-detect'
 import FormLogo from '../../components/FormLogo/formLogo'
 import { PageWrapper, FlexRow, SwapAppBody } from './styledComps';
+import { isMobile } from 'react-device-detect'
 
 
 export default function Swap() {
@@ -306,7 +307,7 @@ export default function Swap() {
         onConfirm={handleConfirmTokenWarning}
       />
       <FlexRow>
-        <SwapChart />
+        { !isMobile && <SwapChart /> }
         <SwapAppBody>
           {/* <SwapPoolTabs active={'swap'} /> */}
           <FormLogo />
@@ -507,6 +508,7 @@ export default function Swap() {
           <AdvancedSwapDetailsDropdown trade={trade} />
         </SwapAppBody>
       </FlexRow>
+      {isMobile && <SwapChart />}
       <SwapHistory />
     </PageWrapper>
   )
